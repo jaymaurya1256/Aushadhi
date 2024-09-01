@@ -18,43 +18,41 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
-class Aushadhi {
-    @Composable
-    fun AushadhiList(items: List<String>) {
-        LazyColumn(
+@Composable
+fun AushadhiList(items: List<String>) {
+    LazyColumn(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color.Gray)
+    ) {
+        items(items) { item ->
+            Item(item)
+        }
+    }
+}
+
+@Composable
+private fun Item(title: String) {
+    Card(
+        modifier = Modifier
+            .padding(8.dp)
+            .fillMaxWidth()
+            .height(100.dp),
+    ) {
+        Box(
             modifier = Modifier
                 .fillMaxSize()
-                .background(Color.Gray)
+                .padding(16.dp),
+            contentAlignment = Alignment.CenterStart
         ) {
-            items(items) { item ->
-                Item(item)
-            }
+            Text(text = title, style = MaterialTheme.typography.bodyMedium)
         }
     }
+}
 
-    @Composable
-    private fun Item(title: String) {
-        Card(
-            modifier = Modifier
-                .padding(8.dp)
-                .fillMaxWidth()
-                .height(100.dp),
-        ) {
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(16.dp),
-                contentAlignment = Alignment.CenterStart
-            ) {
-                Text(text = title, style = MaterialTheme.typography.bodyMedium)
-            }
-        }
-    }
-
-    @Preview(showBackground = true)
-    @Composable
-    private fun PreviewDynamicCardList() {
-        val sampleItems = List(20) { "Item #$it" }
-        AushadhiList(items = sampleItems)
-    }
+@Preview(showBackground = true)
+@Composable
+private fun PreviewDynamicCardList() {
+    val sampleItems = List(20) { "Item #$it" }
+    AushadhiList(items = sampleItems)
 }
