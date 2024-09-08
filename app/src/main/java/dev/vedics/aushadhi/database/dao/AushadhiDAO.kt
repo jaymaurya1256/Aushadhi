@@ -11,13 +11,13 @@ import dev.vedics.aushadhi.database.entity.Aushadhi
 @Dao
 interface AushadhiDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(room: Aushadhi)
+    suspend fun insert(aushadhi: Aushadhi)
 
     @Delete
-    suspend fun delete(room: Aushadhi)
+    suspend fun delete(aushadhi: Aushadhi)
 
     @Update
-    suspend fun update(room: Aushadhi)
+    suspend fun update(aushadhi: Aushadhi)
 
     @Query("SELECT * FROM aushadhi")
     suspend fun getAll(): List<Aushadhi>

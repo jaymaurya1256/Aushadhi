@@ -23,7 +23,7 @@ fun AushadhiList(items: List<String>) {
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.Gray)
+            .background(Color.LightGray)
     ) {
         items(items) { item ->
             Item(item)

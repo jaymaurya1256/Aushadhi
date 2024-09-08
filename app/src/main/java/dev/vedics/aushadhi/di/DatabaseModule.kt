@@ -9,6 +9,8 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import dev.vedics.aushadhi.database.MainDatabase
 import dev.vedics.aushadhi.database.dao.AushadhiDAO
+import dev.vedics.aushadhi.database.dao.DiseaseDAO
+import dev.vedics.aushadhi.database.dao.PatientsDAO
 import javax.inject.Singleton
 
 @Module
@@ -26,7 +28,18 @@ object DatabaseModule {
     }
 
     @Provides
-    fun provideUserDao(database: MainDatabase): AushadhiDAO {
+    fun provideAushadhiDao(database: MainDatabase): AushadhiDAO {
         return database.aushadhiDao()
     }
+
+    @Provides
+    fun provideDiseaseDao(database: MainDatabase): DiseaseDAO {
+        return database.diseaseDao()
+    }
+
+    @Provides
+    fun providePatientDao(database: MainDatabase): PatientsDAO {
+        return database.patientDao()
+    }
+
 }
