@@ -5,9 +5,10 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import dev.vedics.aushadhi.database.dao.AushadhiDAO
-import dev.vedics.aushadhi.ui.screens.aushadhi.Aushadhi
+import dev.vedics.aushadhi.database.entity.Aushadhi
+import dev.vedics.aushadhi.database.entity.Disease
 
-@Database(entities = [Aushadhi::class], version = 1, exportSchema = false)
+@Database(entities = [Aushadhi::class,Disease::class], version = 1, exportSchema = false)
 abstract class MainDatabase : RoomDatabase() {
 
     abstract fun aushadhiDao(): AushadhiDAO

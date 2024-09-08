@@ -7,9 +7,10 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import dev.vedics.aushadhi.database.entity.Aushadhi
+import dev.vedics.aushadhi.database.entity.Disease
 
 @Dao
-interface AushadhiDAO {
+interface DiseaseDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(room: Aushadhi)
 
@@ -20,5 +21,5 @@ interface AushadhiDAO {
     suspend fun update(room: Aushadhi)
 
     @Query("SELECT * FROM aushadhi")
-    suspend fun getAll(): List<Aushadhi>
+    suspend fun getAll(): List<Disease>
 }
