@@ -16,28 +16,29 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun PatientList(items: List<String>) {
+fun PatientScreen(items: List<String>, itemHeight: Dp) {
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
             .background(Color.LightGray)
     ) {
         items(items) { item ->
-            Item(item)
+            Item(item, itemHeight)
         }
     }
 }
 
 @Composable
-private fun Item(title: String) {
+private fun Item(title: String, itemHeight: Dp) {
     Card(
         modifier = Modifier
             .padding(8.dp)
             .fillMaxWidth()
-            .height(100.dp),
+            .height(itemHeight),
     ) {
         Box(
             modifier = Modifier
@@ -54,5 +55,5 @@ private fun Item(title: String) {
 @Composable
 private fun PreviewDynamicCardList() {
     val sampleItems = List(20) { "Item #$it" }
-    PatientList(items = sampleItems)
+    PatientScreen(items = sampleItems, 100.dp)
 }

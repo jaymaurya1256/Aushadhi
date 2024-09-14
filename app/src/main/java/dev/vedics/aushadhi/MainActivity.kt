@@ -4,22 +4,17 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.BottomAppBar
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.internal.composableLambda
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -27,11 +22,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
-import dev.vedics.aushadhi.database.entity.Aushadhi
-import dev.vedics.aushadhi.ui.components.Add
-import dev.vedics.aushadhi.ui.screens.aushadhi.AushadhiList
-import dev.vedics.aushadhi.ui.screens.disease.DiseaseList
-import dev.vedics.aushadhi.ui.screens.patient.PatientList
+import dev.vedics.aushadhi.ui.components.AddButton
+import dev.vedics.aushadhi.ui.screens.aushadhi.AushadhiScreen
+import dev.vedics.aushadhi.ui.screens.patient.PatientScreen
 import dev.vedics.aushadhi.ui.theme.AushadhiTheme
 import dev.vedics.aushadhi.ui.theme.Orange
 import dev.vedics.aushadhi.utils.ButtonType
@@ -48,46 +41,40 @@ class MainActivity : ComponentActivity() {
                         BottomAppBar {
                             Spacer(modifier = Modifier.weight(0.5f))
                             IconButton(onClick = {  }) {
-                                Image(
+                                Icon(
                                     painter = painterResource(id = R.drawable.aushadhi),
                                     contentDescription = "Aushadhi",
-                                    colorFilter = ColorFilter.tint(Orange)
+                                    tint = Orange
                                 )
                             }
                             Spacer(modifier = Modifier.weight(1f))
                             IconButton(onClick = { /*TODO*/ }) {
-                                Image(
+                                Icon(
                                     painter = painterResource(id = R.drawable.disease),
                                     contentDescription = "Rog",
                                 )
                             }
                             Spacer(modifier = Modifier.weight(1f))
                             IconButton(onClick = { /*TODO*/ }) {
-                                Image(
+                                Icon(
                                     painter = painterResource(id = R.drawable.patient),
                                     contentDescription = "Patient",
-                                    colorFilter = ColorFilter.tint(Orange)
+                                    tint = Orange
                                 )
                             }
                             Spacer(modifier = Modifier.weight(0.5f))
                         }
                     },
+                    floatingActionButton = {
+                        FloatingActionButton(onClick = {  }) {
+                            AddButton(text = "Add+", category = ButtonType.ADD_AUSHADHI) {
+                            }
+                        }
+                    },
                     modifier = Modifier.fillMaxSize()
                 ) { innerPadding ->
                     Spacer(modifier = Modifier.padding(innerPadding))
-                    App()
-                    Box(modifier = Modifier.fillMaxSize()) {
-                        Add(
-                            modifier = Modifier
-                                .align(Alignment.BottomEnd)
-                                .padding(innerPadding)
-                                .padding(end = 4.dp, bottom = 4.dp),
-                            text = "Add +",
-                            category = ButtonType.ADD_AUSHADHI
-                        ) {
-
-                        }
-                    }
+                    App(innerPadding)
                 }
             }
         }
@@ -95,17 +82,17 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun App() {
+fun App(padding: PaddingValues) {
     val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = "aushadhi") {
+    NavHost(navController = navController, startDestination = "aushadhi", Modifier.padding(padding)) {
         composable(route = "aushadhi") {
-            AushadhiList(items = List(20) { "Item #$it aushadhi" })
+            AushadhiScreen(items = List(20) { "Item #$it aushadhi" }, 100.dp)
         }
         composable(route = "disease") {
-            DiseaseList(items = List(20) { "Item #$it disease" })
+            PatientScreen(items = List(20) { "Item #$it disease" }, 100.dp)
         }
         composable(route = "patient") {
-            PatientList(items = List(20) { "Item #$it patient" })
+            PatientScreen(items = List(20) { "Item #$it patient" }, 100.dp)
         }
     }
 }
@@ -113,5 +100,5 @@ fun App() {
 @Preview(showBackground = true)
 @Composable
 fun AushadhiPreview() {
-    AushadhiList(items = List(20) { "Item #$it" })
+    AushadhiScreen(items = List(20) { "Item #$it" }, 100.dp)
 }

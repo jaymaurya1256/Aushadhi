@@ -3,7 +3,6 @@ package dev.vedics.aushadhi.ui.components
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -28,61 +27,50 @@ import dev.vedics.aushadhi.utils.ButtonType
 
 
 @Composable
-fun Add(
+fun AddButton(
     modifier: Modifier = Modifier,
     text: String,
     category: Enum<ButtonType>,
-    bgColor: Color = Orange,
+    backgroundColor: Color = Orange,
     contentColor: Color = White,
     size: Dp = 35.dp,
     onClick: () -> Unit
 ) {
-    Box(
+    Column(
         modifier = modifier
-            .background(color = bgColor, shape = RoundedCornerShape(8.dp))
+            .background(color = backgroundColor, shape = RoundedCornerShape(8.dp))
             .clickable(onClick = onClick)
             .padding(vertical = 12.dp, horizontal = 16.dp),
-        contentAlignment = Alignment.Center
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        val icon: Painter = when (category) {
-            ButtonType.ADD_DISEASE -> {
-                painterResource(id = R.drawable.disease)
+        val icon: Painter = painterResource(
+            when (category) {
+                ButtonType.ADD_DISEASE -> R.drawable.disease
+                ButtonType.ADD_PATIENT -> R.drawable.patient
+                ButtonType.ADD_AUSHADHI -> R.drawable.aushadhi
+                else -> R.drawable.aushadhi
             }
-
-            ButtonType.ADD_PATIENT -> {
-                painterResource(id = R.drawable.patient)
-            }
-
-            ButtonType.ADD_AUSHADHI -> {
-                painterResource(id = R.drawable.aushadhi)
-            }
-
-            else -> {
-                painterResource(id = R.drawable.disease)
-            }
-        }
-        Column {
-            Image(
-                painter = icon,
-                contentDescription = text,
-                modifier = Modifier.size(size),
-                colorFilter = ColorFilter.tint(Color.White)
-            )
-            Text(
-                text = text,
-                color = contentColor,
-                fontSize = 12.sp,
-                fontWeight = FontWeight.Bold,
-                modifier = Modifier.align(Alignment.CenterHorizontally)
-            )
-        }
+        )
+        Image(
+            painter = icon,
+            contentDescription = text,
+            modifier = Modifier.size(size),
+            colorFilter = ColorFilter.tint(Color.White)
+        )
+        Text(
+            text = text,
+            color = contentColor,
+            fontSize = 12.sp,
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier.align(Alignment.CenterHorizontally)
+        )
     }
 }
 
 @Preview
 @Composable
-fun Preview() {
-    Add(text = "Add +", category = ButtonType.ADD_AUSHADHI) {
+private fun Preview() {
+    AddButton(text = "Add +", category = ButtonType.ADD_AUSHADHI) {
 
     }
 }
