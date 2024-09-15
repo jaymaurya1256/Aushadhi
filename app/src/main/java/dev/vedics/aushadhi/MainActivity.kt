@@ -27,6 +27,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
 import dev.vedics.aushadhi.ui.components.AddButton
+import dev.vedics.aushadhi.ui.components.AppNavigation
 import dev.vedics.aushadhi.ui.components.AushadhiTextInputFiled
 import dev.vedics.aushadhi.ui.screens.aushadhi.AushadhiScreen
 import dev.vedics.aushadhi.ui.screens.patient.PatientScreen
@@ -41,33 +42,16 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             AushadhiTheme {
-                App()
+                AppNavigation()
             }
         }
     }
 }
 
-@Composable
-fun App() {
-    val navController = rememberNavController()
-    NavHost(
-        navController = navController,
-        startDestination = "aushadhi",
-    ) {
-        composable(route = "aushadhi") {
-            AushadhiScreen(items = List(20) { "Item #$it aushadhi" }, 100.dp)
-        }
-        composable(route = "disease") {
-            PatientScreen(items = List(20) { "Item #$it disease" }, 100.dp)
-        }
-        composable(route = "patient") {
-            PatientScreen(items = List(20) { "Item #$it patient" }, 100.dp)
-        }
-    }
-}
 
 @Preview(showBackground = true)
 @Composable
 fun AushadhiPreview() {
-    AushadhiScreen(items = List(20) { "Item #$it" }, 100.dp)
+    val navController = rememberNavController()
+    AushadhiScreen(items = List(20) { "Item #$it" }, 100.dp, navController)
 }

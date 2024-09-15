@@ -1,5 +1,6 @@
 package dev.vedics.aushadhi.ui.screens.aushadhi
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -19,24 +20,29 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import dev.vedics.aushadhi.ui.components.AddButton
 import dev.vedics.aushadhi.ui.components.BottomNavigationBar
 import dev.vedics.aushadhi.utils.ButtonType
-import kotlin.math.absoluteValue
+import kotlin.coroutines.coroutineContext
+
+private const val TAG = "Aushadhi"
 
 @Composable
-fun AushadhiScreen(items: List<String>, itemHeight: Dp) {
+fun AushadhiScreen(items: List<String>, itemHeight: Dp, navController: NavController) {
 
+    val density = LocalDensity.current
     var bottomNavHeight by remember {
         mutableIntStateOf(80)
     }
@@ -54,9 +60,11 @@ fun AushadhiScreen(items: List<String>, itemHeight: Dp) {
                 Item(item, itemHeight)
             }
         }
-        BottomNavigationBar(modifier = Modifier.onGloballyPositioned {
-            bottomNavHeight = it.size.height
-        })
+        BottomNavigationBar(
+            navController = navController,
+            modifier = Modifier.onGloballyPositioned {
+                bottomNavHeight = (it.size.height / density.density).toInt()
+            })
 
     }
     Box(modifier = Modifier.fillMaxSize()) {
@@ -64,8 +72,11 @@ fun AushadhiScreen(items: List<String>, itemHeight: Dp) {
             text = "Add+", category = ButtonType.ADD_AUSHADHI, modifier = Modifier
                 .align(Alignment.BottomEnd)
                 .windowInsetsPadding(WindowInsets.navigationBars)
-                .padding(vertical = bottomNavHeight.dp).padding(16.dp)
-        )
+                .padding(vertical = bottomNavHeight.dp)
+                .padding(16.dp)
+        ) {
+
+        }
     }
 }
 
@@ -93,5 +104,6 @@ private fun Item(title: String, itemHeight: Dp) {
 @Composable
 private fun PreviewDynamicCardList() {
     val sampleItems = List(20) { "Item #$it" }
-    AushadhiScreen(items = sampleItems, 100.dp)
+    val navController = rememberNavController()
+    AushadhiScreen(items = sampleItems, 100.dp, navController = navController)
 }
