@@ -14,6 +14,10 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -23,6 +27,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
 import dev.vedics.aushadhi.ui.components.AddButton
+import dev.vedics.aushadhi.ui.components.AushadhiTextInputFiled
 import dev.vedics.aushadhi.ui.screens.aushadhi.AushadhiScreen
 import dev.vedics.aushadhi.ui.screens.patient.PatientScreen
 import dev.vedics.aushadhi.ui.theme.AushadhiTheme
@@ -36,55 +41,19 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             AushadhiTheme {
-                Scaffold(
-                    bottomBar = {
-                        BottomAppBar {
-                            Spacer(modifier = Modifier.weight(0.5f))
-                            IconButton(onClick = {  }) {
-                                Icon(
-                                    painter = painterResource(id = R.drawable.aushadhi),
-                                    contentDescription = "Aushadhi",
-                                    tint = Orange
-                                )
-                            }
-                            Spacer(modifier = Modifier.weight(1f))
-                            IconButton(onClick = { /*TODO*/ }) {
-                                Icon(
-                                    painter = painterResource(id = R.drawable.disease),
-                                    contentDescription = "Rog",
-                                )
-                            }
-                            Spacer(modifier = Modifier.weight(1f))
-                            IconButton(onClick = { /*TODO*/ }) {
-                                Icon(
-                                    painter = painterResource(id = R.drawable.patient),
-                                    contentDescription = "Patient",
-                                    tint = Orange
-                                )
-                            }
-                            Spacer(modifier = Modifier.weight(0.5f))
-                        }
-                    },
-                    floatingActionButton = {
-                        FloatingActionButton(onClick = {  }) {
-                            AddButton(text = "Add+", category = ButtonType.ADD_AUSHADHI) {
-                            }
-                        }
-                    },
-                    modifier = Modifier.fillMaxSize()
-                ) { innerPadding ->
-                    Spacer(modifier = Modifier.padding(innerPadding))
-                    App(innerPadding)
-                }
+                App()
             }
         }
     }
 }
 
 @Composable
-fun App(padding: PaddingValues) {
+fun App() {
     val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = "aushadhi", Modifier.padding(padding)) {
+    NavHost(
+        navController = navController,
+        startDestination = "aushadhi",
+    ) {
         composable(route = "aushadhi") {
             AushadhiScreen(items = List(20) { "Item #$it aushadhi" }, 100.dp)
         }
