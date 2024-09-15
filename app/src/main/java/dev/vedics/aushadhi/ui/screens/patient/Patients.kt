@@ -1,4 +1,4 @@
-package dev.vedics.aushadhi.ui.screens.aushadhi
+package dev.vedics.aushadhi.ui.screens.patient
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun AushadhiScreen(items: List<String>, itemHeight: Dp) {
+fun PatientScreen(items: List<String>, itemHeight: Dp) {
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -55,5 +55,5 @@ private fun Item(title: String, itemHeight: Dp) {
 @Composable
 private fun PreviewDynamicCardList() {
     val sampleItems = List(20) { "Item #$it" }
-    AushadhiScreen(items = sampleItems, 100.dp)
+    PatientScreen(items = sampleItems, 100.dp)
 }
