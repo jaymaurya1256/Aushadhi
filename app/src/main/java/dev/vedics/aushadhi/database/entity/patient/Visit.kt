@@ -4,16 +4,19 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
 import androidx.room.PrimaryKey
+import dev.vedics.aushadhi.utils.PATIENT_INFO_COLUMN_ID
+import dev.vedics.aushadhi.utils.VISITS_TABLE_NAME
+import dev.vedics.aushadhi.utils.VISIT_PATIENT_ID
 
 @Entity(
-    tableName = "visits",
+    tableName = VISITS_TABLE_NAME,
     foreignKeys = [ForeignKey(
         entity = PatientInfo::class,
-        parentColumns = ["id"],
-        childColumns = ["patientId"],
+        parentColumns = [PATIENT_INFO_COLUMN_ID],
+        childColumns = [VISIT_PATIENT_ID],
         onDelete = ForeignKey.CASCADE
     )],
-    indices = [Index(value = ["patientId"])]
+    indices = [Index(value = [VISIT_PATIENT_ID])]
 )
 data class Visit(
     @PrimaryKey(autoGenerate = true) val visitId: Int = 0,

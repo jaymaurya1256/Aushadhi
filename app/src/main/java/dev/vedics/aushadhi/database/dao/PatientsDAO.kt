@@ -9,9 +9,13 @@ import androidx.room.Update
 import dev.vedics.aushadhi.database.entity.patient.Patient
 import dev.vedics.aushadhi.database.entity.patient.PatientInfo
 import dev.vedics.aushadhi.database.entity.patient.Visit
+import dev.vedics.aushadhi.utils.PATIENT_INFO_PATIENT_ID
+import dev.vedics.aushadhi.utils.PATIENT_INFO_TABLE_NAME
+import dev.vedics.aushadhi.utils.VISITS_TABLE_NAME
+import dev.vedics.aushadhi.utils.VISIT_PATIENT_ID
 
 @Dao
-interface PatientsDAO {
+interface PatientsDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(patientInfo: PatientInfo)
 
@@ -24,12 +28,12 @@ interface PatientsDAO {
     @Update
     suspend fun update(patientInfo: PatientInfo)
 
-    @Query("SELECT * FROM patientInfo")
+    @Query("SELECT * FROM $PATIENT_INFO_TABLE_NAME")
     suspend fun getAll(): List<PatientInfo>
 
-    @Query("SELECT * FROM patientInfo WHERE patientId = :patientId")
+    @Query("SELECT * FROM $PATIENT_INFO_TABLE_NAME WHERE $PATIENT_INFO_PATIENT_ID = :patientId")
     suspend fun getPatientInfo(patientId: Long): Patient
 
-    @Query("SELECT * FROM visits WHERE patientId= :patientId")
+    @Query("SELECT * FROM $VISITS_TABLE_NAME WHERE $VISIT_PATIENT_ID= :patientId")
     suspend fun getPatientVisit(patientId: Long): List<Visit>
 }

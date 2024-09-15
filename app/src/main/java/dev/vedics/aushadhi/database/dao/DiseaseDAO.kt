@@ -10,7 +10,7 @@ import dev.vedics.aushadhi.database.entity.Aushadhi
 import dev.vedics.aushadhi.database.entity.Disease
 
 @Dao
-interface DiseaseDAO {
+interface DiseaseDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(disease: Aushadhi)
 

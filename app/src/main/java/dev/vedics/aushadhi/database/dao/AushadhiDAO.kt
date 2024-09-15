@@ -9,7 +9,7 @@ import androidx.room.Update
 import dev.vedics.aushadhi.database.entity.Aushadhi
 
 @Dao
-interface AushadhiDAO {
+interface AushadhiDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(aushadhi: Aushadhi)
 

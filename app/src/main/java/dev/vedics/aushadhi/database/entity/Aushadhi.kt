@@ -8,5 +8,5 @@ data class Aushadhi(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
     val name: String,
-    val description: String? = null
+    val description: String = ""
 )
