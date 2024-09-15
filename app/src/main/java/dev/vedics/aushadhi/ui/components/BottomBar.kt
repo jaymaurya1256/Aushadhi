@@ -1,9 +1,12 @@
 package dev.vedics.aushadhi.ui.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
@@ -27,18 +30,18 @@ import dev.vedics.aushadhi.utils.PATIENT_SCREEN
 fun BottomNavigationBar(navController: NavController, modifier: Modifier = Modifier) {
     Row(
         modifier = modifier
-            .wrapContentHeight()
+            .background(Color.Transparent)
             .fillMaxWidth()
-            .clip(
-                RoundedCornerShape(size = 16.dp)
-            )
-            .background(Color.White)
+            .background(Color.White, RoundedCornerShape(
+                topStart = 16.dp, topEnd = 16.dp
+            ))
+            .navigationBarsPadding()
+            .padding(16.dp),
+        horizontalArrangement = Arrangement.SpaceAround
     ) {
         Icon(
             modifier = Modifier
-                .weight(1f)
-                .padding(16.dp)
-                .size(45.dp)
+                .size(48.dp)
                 .clip(CircleShape)
                 .clickable {
                     navController.navigate(AUSHADHI_SCREEN)
@@ -49,9 +52,7 @@ fun BottomNavigationBar(navController: NavController, modifier: Modifier = Modif
         )
         Icon(
             modifier = Modifier
-                .weight(1f)
-                .padding(16.dp)
-                .size(45.dp)
+                .size(48.dp)
                 .clip(CircleShape)
                 .clickable {
                     navController.navigate(DISEASE_SCREEN)
@@ -62,9 +63,7 @@ fun BottomNavigationBar(navController: NavController, modifier: Modifier = Modif
         )
         Icon(
             modifier = Modifier
-                .weight(1f)
-                .padding(16.dp)
-                .size(45.dp)
+                .size(48.dp)
                 .clip(CircleShape)
                 .clickable {
                     navController.navigate(PATIENT_SCREEN)

@@ -47,11 +47,3 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
-
-
-@Preview(showBackground = true)
-@Composable
-fun AushadhiPreview() {
-    val navController = rememberNavController()
-    AushadhiScreen(items = List(20) { "Item #$it" }, 100.dp, navController)
-}
