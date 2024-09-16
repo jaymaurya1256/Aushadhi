@@ -3,12 +3,14 @@ package dev.vedics.aushadhi.ui.screens.disease
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -33,50 +35,52 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import dev.vedics.aushadhi.ui.components.AddButton
 import dev.vedics.aushadhi.ui.components.BottomNavigationBar
+import dev.vedics.aushadhi.utils.ADD_RECORD_SCREEN
 import dev.vedics.aushadhi.utils.ButtonType
 
 @Composable
-fun DiseaseScreen(items: List<String>,  itemHeight: Dp, navController: NavController) {
+fun DiseaseScreen(items: List<String>, itemHeight: Dp, navController: NavController) {
 
-    val density = LocalDensity.current
-    var bottomNavHeight by remember {
-        mutableIntStateOf(80)
-    }
+    var bottomNavHeight by remember { mutableIntStateOf(0) }
 
-    Column(
-        modifier = Modifier.systemBarsPadding()
-    ) {
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxSize()
-                .weight(1f)
-                .background(Color.LightGray)
+    with(LocalDensity.current) {
+        Box(
+            modifier = Modifier.fillMaxSize()
         ) {
-            items(items) { item ->
-                Item(item, itemHeight)
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(Color.LightGray),
+                contentPadding = PaddingValues(
+                    top = WindowInsets.systemBars.getTop(this@with).toDp(),
+                    bottom = bottomNavHeight.toDp()
+                )
+            ) {
+                items(items) { item ->
+                    Item(item, itemHeight)
+                }
+            }
+            BottomNavigationBar(
+                navController = navController,
+                modifier = Modifier
+                    .align(Alignment.BottomCenter)
+                    .onGloballyPositioned { bottomNavHeight = it.size.height }
+            )
+
+            AddButton(
+                text = "Add+", category = ButtonType.ADD_AUSHADHI, modifier = Modifier
+                    .align(Alignment.BottomEnd)
+                    .padding(vertical = bottomNavHeight.toDp() + 8.dp)
+                    .padding(16.dp)
+            ){
+                navController.navigate(ADD_RECORD_SCREEN)
             }
         }
-        BottomNavigationBar(navController = navController, modifier = Modifier.onGloballyPositioned {
-            bottomNavHeight = (it.size.height / density.density).toInt()
-        })
-
     }
-    Box(modifier = Modifier.fillMaxSize()) {
-        AddButton(
-            text = "Add+", category = ButtonType.ADD_AUSHADHI, modifier = Modifier
-                .align(Alignment.BottomEnd)
-                .windowInsetsPadding(WindowInsets.navigationBars)
-                .padding(vertical = bottomNavHeight.dp)
-                .padding(16.dp)
-        ){
-
-        }
-    }
-
 }
 
 @Composable
-private fun Item(title: String,  itemHeight: Dp) {
+private fun Item(title: String, itemHeight: Dp) {
     Card(
         modifier = Modifier
             .padding(8.dp)
