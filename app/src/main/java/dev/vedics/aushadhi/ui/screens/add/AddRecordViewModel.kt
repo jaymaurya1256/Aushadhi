@@ -7,12 +7,8 @@ import dev.vedics.aushadhi.database.entity.Aushadhi
 import javax.inject.Inject
 
 @HiltViewModel
-class AddRecordViewModel @Inject constructor(private val db: AushadhiDao): ViewModel() {
+class AddRecordViewModel @Inject constructor(private val aushadhiDao: AushadhiDao): ViewModel() {
     suspend fun saveRecords(aushadhiName: String, description: String) {
-        db.insert(Aushadhi(name = aushadhiName, description = description))
-    }
-
-    suspend fun getAll(): List<Aushadhi> {
-        return db.getAll()
+        aushadhiDao.insert(Aushadhi(name = aushadhiName, description = description))
     }
 }

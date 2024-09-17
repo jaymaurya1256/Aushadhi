@@ -1,12 +1,11 @@
 package dev.vedics.aushadhi.ui.components
 
-import AddRecord
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import dev.vedics.aushadhi.database.entity.Aushadhi
+import dev.vedics.aushadhi.ui.screens.add.AddRecord
 import dev.vedics.aushadhi.ui.screens.aushadhi.AushadhiScreen
 import dev.vedics.aushadhi.ui.screens.disease.DiseaseScreen
 import dev.vedics.aushadhi.ui.screens.patient.PatientScreen
