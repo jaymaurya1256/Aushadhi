@@ -13,6 +13,7 @@ import dev.vedics.aushadhi.utils.PATIENT_INFO_PATIENT_ID
 import dev.vedics.aushadhi.utils.PATIENT_INFO_TABLE_NAME
 import dev.vedics.aushadhi.utils.VISITS_TABLE_NAME
 import dev.vedics.aushadhi.utils.VISIT_PATIENT_ID
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface PatientsDao {
@@ -29,11 +30,11 @@ interface PatientsDao {
     suspend fun update(patientInfo: PatientInfo)
 
     @Query("SELECT * FROM $PATIENT_INFO_TABLE_NAME")
-    suspend fun getAll(): List<PatientInfo>
+    fun getAll(): Flow<List<PatientInfo>>
 
     @Query("SELECT * FROM $PATIENT_INFO_TABLE_NAME WHERE $PATIENT_INFO_PATIENT_ID = :patientId")
     suspend fun getPatientInfo(patientId: Long): Patient
 
     @Query("SELECT * FROM $VISITS_TABLE_NAME WHERE $VISIT_PATIENT_ID= :patientId")
-    suspend fun getPatientVisit(patientId: Long): List<Visit>
+    fun getPatientVisit(patientId: Long): Flow<List<Visit>>
 }

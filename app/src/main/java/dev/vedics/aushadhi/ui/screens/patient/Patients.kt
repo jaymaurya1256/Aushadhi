@@ -19,8 +19,10 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -31,17 +33,39 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import dev.vedics.aushadhi.database.entity.Aushadhi
+import dev.vedics.aushadhi.database.entity.patient.Patient
+import dev.vedics.aushadhi.database.entity.patient.PatientInfo
+import dev.vedics.aushadhi.database.entity.patient.Visit
 import dev.vedics.aushadhi.ui.components.AddButton
 import dev.vedics.aushadhi.ui.components.BottomNavigationBar
+import dev.vedics.aushadhi.ui.components.ListItemMainPatient
+import dev.vedics.aushadhi.ui.screens.disease.DiseaseViewModel
 import dev.vedics.aushadhi.utils.ADD_RECORD_SCREEN
 import dev.vedics.aushadhi.utils.ButtonType
 
 @Composable
-fun PatientScreen(items: List<String>, itemHeight: Dp, navController: NavController) {
+fun PatientScreen(navController: NavController, viewModel: PatientViewModel = hiltViewModel()) {
 
     var bottomNavHeight by remember { mutableIntStateOf(0) }
+    var items by remember { mutableIntStateOf(0) }
+    var patientList by remember {
+        mutableStateOf(
+            listOf(
+                PatientInfo(0, "unknown", 0)
+            )
+        )
+    }
+
+    LaunchedEffect(key1 = items) {
+        viewModel.listOfPatientsInfo.collect {
+            patientList = it
+            items = patientList.size
+        }
+    }
 
     with(LocalDensity.current) {
         Box(
@@ -57,7 +81,10 @@ fun PatientScreen(items: List<String>, itemHeight: Dp, navController: NavControl
                 )
             ) {
                 items(items) { item ->
-                    Item(item, itemHeight)
+                    ListItemMainPatient(
+                        patientList[item].name,
+                        patientList[item].patientId
+                    )
                 }
             }
             BottomNavigationBar(
@@ -72,7 +99,7 @@ fun PatientScreen(items: List<String>, itemHeight: Dp, navController: NavControl
                     .align(Alignment.BottomEnd)
                     .padding(vertical = bottomNavHeight.toDp() + 8.dp)
                     .padding(16.dp)
-            ){
+            ) {
                 navController.navigate(ADD_RECORD_SCREEN)
             }
         }
@@ -96,12 +123,4 @@ private fun Item(title: String, itemHeight: Dp) {
             Text(text = title, style = MaterialTheme.typography.bodyMedium)
         }
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-private fun PreviewDynamicCardList() {
-    val sampleItems = List(20) { "Item #$it" }
-    val navController = rememberNavController()
-    PatientScreen(items = sampleItems, 100.dp, navController)
 }

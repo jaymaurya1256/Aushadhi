@@ -25,10 +25,10 @@ fun AppNavigation() {
             AushadhiScreen(navController)
         }
         composable(route = PATIENT_SCREEN) {
-            PatientScreen(items = List(20) { "Item #$it patient" }, 100.dp, navController)
+            PatientScreen(navController)
         }
         composable(route = DISEASE_SCREEN) {
-            DiseaseScreen(items = List(20) { "Item #$it disease" }, 100.dp, navController)
+            DiseaseScreen(navController)
         }
         composable(route = ADD_RECORD_SCREEN) {
             AddRecord(navController)

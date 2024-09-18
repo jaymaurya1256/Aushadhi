@@ -8,6 +8,7 @@ import androidx.room.Query
 import androidx.room.Update
 import dev.vedics.aushadhi.database.entity.Aushadhi
 import dev.vedics.aushadhi.database.entity.Disease
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface DiseaseDao {
@@ -21,5 +22,5 @@ interface DiseaseDao {
     suspend fun update(disease: Aushadhi)
 
     @Query("SELECT * FROM disease")
-    suspend fun getAll(): List<Disease>
+    fun getAll(): Flow<List<Disease>>
 }
