@@ -31,6 +31,9 @@ import dev.vedics.aushadhi.ui.components.BottomNavigationBar
 import dev.vedics.aushadhi.ui.components.ListItemMain
 import dev.vedics.aushadhi.utils.ADD_RECORD_SCREEN
 import dev.vedics.aushadhi.utils.ButtonType
+import dev.vedics.aushadhi.utils.RECORD_AUSHADHI
+import dev.vedics.aushadhi.utils.RECORD_TYPE
+import dev.vedics.aushadhi.utils.ScreenType
 
 private const val TAG = "Aushadhi"
 
@@ -66,7 +69,7 @@ fun AushadhiScreen(
                 )
             ) {
                 items(items) { item ->
-                    ListItemMain(aushadhiList[item].name, aushadhiList[item].description)
+                    ListItemMain(aushadhiList[item].id, aushadhiList[item].name, aushadhiList[item].description, navController, screenType = ScreenType.AUSHADHI)
                 }
             }
 
@@ -83,12 +86,11 @@ fun AushadhiScreen(
                     .padding(vertical = bottomNavHeight.toDp() + 8.dp)
                     .padding(16.dp)
             ) {
-                navController.navigate(ADD_RECORD_SCREEN)
+                navController.navigate(route = "$ADD_RECORD_SCREEN/$RECORD_AUSHADHI")
             }
         }
     }
 }
-
 
 
 @Preview(showBackground = true)

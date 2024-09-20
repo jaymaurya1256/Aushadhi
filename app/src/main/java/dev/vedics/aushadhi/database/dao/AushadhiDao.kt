@@ -22,4 +22,7 @@ interface AushadhiDao {
 
     @Query("SELECT * FROM aushadhi")
     fun getAll(): Flow<List<Aushadhi>>
+
+    @Query("SELECT * FROM aushadhi WHERE id = :id")
+    fun getAushadhiById(id: Int): Flow<Aushadhi>
 }

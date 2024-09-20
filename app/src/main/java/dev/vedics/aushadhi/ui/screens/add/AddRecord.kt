@@ -39,91 +39,115 @@ import androidx.navigation.NavController
 import dev.vedics.aushadhi.ui.screens.add.AddRecordViewModel
 import dev.vedics.aushadhi.ui.theme.Orange
 import dev.vedics.aushadhi.utils.AUSHADHI_SCREEN
+import dev.vedics.aushadhi.utils.DISEASE_SCREEN
+import dev.vedics.aushadhi.utils.RECORD_AUSHADHI
+import dev.vedics.aushadhi.utils.RECORD_DISEASE
+import dev.vedics.aushadhi.utils.RECORD_PATIENT
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AddRecord(navController: NavController, viewModel: AddRecordViewModel = hiltViewModel()) {
-    var aushadhiName by remember { mutableStateOf("") }
-    var aushadhiDescription by remember { mutableStateOf("") }
+fun AddRecord(
+    navController: NavController,
+    recordType: String,
+    viewModel: AddRecordViewModel = hiltViewModel()
 
-    Scaffold(topBar = {
-        TopAppBar(
-            title = { Text("Aushadhi Details") }, colors = TopAppBarDefaults.smallTopAppBarColors(
-                containerColor = Orange, titleContentColor = Color.White
-            )
-        )
-    }, content = { padding ->
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(padding)
-                .background(Color(0xFFF0F0F0))
-                .padding(16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Top
-        ) {
-            // Aushadhi Name Field
-            OutlinedTextField(
-                value = aushadhiName,
-                onValueChange = { aushadhiName = it },
-                label = { Text("Aushadhi Name") },
-                modifier = Modifier.fillMaxWidth(),
-                keyboardOptions = KeyboardOptions.Default.copy(
-                    imeAction = ImeAction.Next, keyboardType = KeyboardType.Text
-                ),
-                shape = RoundedCornerShape(12.dp),
-                textStyle = TextStyle(
-                    fontSize = 16.sp,
-                    fontFamily = FontFamily.SansSerif,
-                    fontWeight = FontWeight.Normal
+) {
+    var name by remember { mutableStateOf("") }
+    var description by remember { mutableStateOf("") }
+
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = { Text("$recordType Details") },
+                colors = TopAppBarDefaults.smallTopAppBarColors(
+                    containerColor = Orange, titleContentColor = Color.White
                 )
             )
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            // Aushadhi Description Field
-            OutlinedTextField(
-                value = aushadhiDescription,
-                onValueChange = { aushadhiDescription = it },
-                label = { Text("Aushadhi Description") },
+        },
+        content = { padding ->
+            Column(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .height(200.dp),
-                shape = RoundedCornerShape(12.dp),
-                textStyle = TextStyle(
-                    fontSize = 16.sp,
-                    fontFamily = FontFamily.SansSerif,
-                    fontWeight = FontWeight.Normal
-                ),
-                keyboardOptions = KeyboardOptions.Default.copy(
-                    imeAction = ImeAction.Done, keyboardType = KeyboardType.Text
-                ),
-                maxLines = 6,
-                visualTransformation = VisualTransformation.None
-            )
-
-            Spacer(modifier = Modifier.height(24.dp))
-
-            Button(
-                onClick = {
-                    CoroutineScope(Dispatchers.IO).launch {
-                        viewModel.saveRecords(
-                            aushadhiName = aushadhiName, description = aushadhiDescription
-                        )
-                    }
-                    navController.navigate(AUSHADHI_SCREEN)
-                },
-                colors = ButtonDefaults.buttonColors(containerColor = Orange),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(50.dp),
-                shape = RoundedCornerShape(12.dp)
+                    .fillMaxSize()
+                    .padding(padding)
+                    .background(Color(0xFFF0F0F0))
+                    .padding(16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Top
             ) {
-                Text("Save", fontSize = 18.sp)
+                OutlinedTextField(
+                    value = name,
+                    onValueChange = { name = it },
+                    label = { Text("$recordType Name") },
+                    modifier = Modifier.fillMaxWidth(),
+                    keyboardOptions = KeyboardOptions.Default.copy(
+                        imeAction = ImeAction.Next, keyboardType = KeyboardType.Text
+                    ),
+                    shape = RoundedCornerShape(12.dp),
+                    textStyle = TextStyle(
+                        fontSize = 16.sp,
+                        fontFamily = FontFamily.SansSerif,
+                        fontWeight = FontWeight.Normal
+                    )
+                )
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                OutlinedTextField(
+                    value = description,
+                    onValueChange = { description = it },
+                    label = { Text("$recordType Description") },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(200.dp),
+                    shape = RoundedCornerShape(12.dp),
+                    textStyle = TextStyle(
+                        fontSize = 16.sp,
+                        fontFamily = FontFamily.SansSerif,
+                        fontWeight = FontWeight.Normal
+                    ),
+                    keyboardOptions = KeyboardOptions.Default.copy(
+                        imeAction = ImeAction.Done, keyboardType = KeyboardType.Text
+                    ),
+                    maxLines = 6,
+                    visualTransformation = VisualTransformation.None
+                )
+
+                Spacer(modifier = Modifier.height(24.dp))
+
+                Button(
+                    onClick = {
+                        CoroutineScope(Dispatchers.IO).launch {
+                            when (recordType) {
+                                RECORD_AUSHADHI -> {
+                                    viewModel.saveAushadhiRecords(
+                                        name = name, description = description
+                                    )
+                                }
+
+                                RECORD_DISEASE -> {
+                                    viewModel.saveDiseaseRecords(
+                                        name = name, description = description
+                                    )
+                                }
+                            }
+                        }
+                        when (recordType) {
+                            RECORD_AUSHADHI -> navController.navigate(AUSHADHI_SCREEN)
+                            RECORD_DISEASE -> navController.navigate(DISEASE_SCREEN)
+                        }
+                    },
+                    colors = ButtonDefaults.buttonColors(containerColor = Orange),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(50.dp),
+                    shape = RoundedCornerShape(12.dp)
+                ) {
+                    Text("Save", fontSize = 18.sp)
+                }
             }
         }
-    })
+    )
 }

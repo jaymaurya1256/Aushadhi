@@ -8,6 +8,8 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 @HiltViewModel
-class AushadhiViewModel @Inject constructor(aushadhiDao: AushadhiDao) : ViewModel() {
+class AushadhiViewModel @Inject constructor(private val aushadhiDao: AushadhiDao) : ViewModel() {
     val listOfAushadhi = aushadhiDao.getAll()
+
+    fun getAushadhiById(id: Int): Flow<Aushadhi> = aushadhiDao.getAushadhiById(id)
 }

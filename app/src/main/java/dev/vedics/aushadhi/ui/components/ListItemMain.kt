@@ -1,5 +1,6 @@
 package dev.vedics.aushadhi.ui.components
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -15,13 +16,29 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import dev.vedics.aushadhi.database.entity.Aushadhi
+import dev.vedics.aushadhi.utils.AUSHADHI_DETAIL_SCREEN
+import dev.vedics.aushadhi.utils.ButtonType
+import dev.vedics.aushadhi.utils.DISEASE_DETAIL_SCREEN
+import dev.vedics.aushadhi.utils.ScreenType
 
 @Composable
-fun ListItemMain(name: String, description: String) {
+fun ListItemMain(id: Int, name: String, description: String, navController: NavController, screenType: ScreenType) {
     Card(
         modifier = Modifier
             .padding(top = 6.dp, start = 8.dp, end = 8.dp)
             .fillMaxWidth()
+            .clickable {
+                when(screenType) {
+                    ScreenType.AUSHADHI -> {
+                        navController.navigate("$AUSHADHI_DETAIL_SCREEN/${id}")
+                    }
+                    ScreenType.DISEASE -> {
+                        navController.navigate("$DISEASE_DETAIL_SCREEN/${id}")
+                    }
+                }
+            }
     ) {
         Column(
             modifier = Modifier

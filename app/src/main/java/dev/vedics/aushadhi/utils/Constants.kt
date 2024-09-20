@@ -6,7 +6,6 @@ const val PATIENT_INFO_TABLE_NAME = "patientInfo"
 const val PATIENT_INFO_COLUMN_ID = "id"
 const val PATIENT_INFO_NAME = "name"
 const val PATIENT_INFO_PATIENT_ID = "patientId"
-
 //Visit constants
 const val VISITS_TABLE_NAME = "visits"
 const val VISIT_ID = "visitId"
@@ -21,3 +20,16 @@ const val AUSHADHI_SCREEN = "aushadhi"
 const val PATIENT_SCREEN = "patient"
 const val DISEASE_SCREEN = "disease"
 const val ADD_RECORD_SCREEN = "addRecordScreen"
+const val AUSHADHI_DETAIL_SCREEN = "aushadhiDetailScreen"
+const val DISEASE_DETAIL_SCREEN = "aushadhiDetailScreen"
+const val PATIENT_DETAIL_SCREEN = "aushadhiDetailScreen"
+
+//ADD RECORD CONSTANTS
+const val RECORD_AUSHADHI = "Aushadhi"
+const val RECORD_DISEASE = "Disease"
+const val RECORD_PATIENT = "Patient"
+const val RECORD_TYPE = "recordType"
+
+//AUSHADHI DETAIL CONSTANTS
+const val AUSHADHI_DETAIL_ID = "aushadhiId"
+const val DISEASE_DETAIL_ID = "aushadhiId"

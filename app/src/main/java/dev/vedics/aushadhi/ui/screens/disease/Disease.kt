@@ -29,6 +29,9 @@ import dev.vedics.aushadhi.ui.components.BottomNavigationBar
 import dev.vedics.aushadhi.ui.components.ListItemMain
 import dev.vedics.aushadhi.utils.ADD_RECORD_SCREEN
 import dev.vedics.aushadhi.utils.ButtonType
+import dev.vedics.aushadhi.utils.RECORD_AUSHADHI
+import dev.vedics.aushadhi.utils.RECORD_DISEASE
+import dev.vedics.aushadhi.utils.ScreenType
 
 @Composable
 fun DiseaseScreen(
@@ -62,7 +65,7 @@ fun DiseaseScreen(
                 )
             ) {
                 items(items) { item ->
-                    ListItemMain(diseaseList[item].name, diseaseList[item].description)
+                    ListItemMain(diseaseList[item].id, diseaseList[item].name, diseaseList[item].description, navController, ScreenType.DISEASE)
                 }
             }
             BottomNavigationBar(navController = navController,
@@ -72,13 +75,13 @@ fun DiseaseScreen(
 
             AddButton(
                 text = "Add+",
-                category = ButtonType.ADD_AUSHADHI,
+                category = ButtonType.ADD_DISEASE,
                 modifier = Modifier
                     .align(Alignment.BottomEnd)
                     .padding(vertical = bottomNavHeight.toDp() + 8.dp)
                     .padding(16.dp)
             ) {
-                navController.navigate(ADD_RECORD_SCREEN)
+                navController.navigate(route = "$ADD_RECORD_SCREEN/$RECORD_DISEASE")
             }
         }
     }

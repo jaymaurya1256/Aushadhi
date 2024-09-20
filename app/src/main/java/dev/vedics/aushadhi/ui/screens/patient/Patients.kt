@@ -46,6 +46,8 @@ import dev.vedics.aushadhi.ui.components.ListItemMainPatient
 import dev.vedics.aushadhi.ui.screens.disease.DiseaseViewModel
 import dev.vedics.aushadhi.utils.ADD_RECORD_SCREEN
 import dev.vedics.aushadhi.utils.ButtonType
+import dev.vedics.aushadhi.utils.RECORD_AUSHADHI
+import dev.vedics.aushadhi.utils.RECORD_PATIENT
 
 @Composable
 fun PatientScreen(navController: NavController, viewModel: PatientViewModel = hiltViewModel()) {
@@ -95,12 +97,13 @@ fun PatientScreen(navController: NavController, viewModel: PatientViewModel = hi
             )
 
             AddButton(
-                text = "Add+", category = ButtonType.ADD_AUSHADHI, modifier = Modifier
+                text = "Add+", category = ButtonType.ADD_PATIENT, modifier = Modifier
                     .align(Alignment.BottomEnd)
                     .padding(vertical = bottomNavHeight.toDp() + 8.dp)
                     .padding(16.dp)
             ) {
-                navController.navigate(ADD_RECORD_SCREEN)
+                //TODO make a separate route as it would have different screen from add record due to the complexity in the UI
+                navController.navigate(route = "$ADD_RECORD_SCREEN/$RECORD_PATIENT")
             }
         }
     }
