@@ -7,6 +7,10 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -14,6 +18,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.blur
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -39,33 +45,51 @@ fun DiseaseDetail(navController: NavController, id: Int, viewModel: DiseaseViewM
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(0xFFE0E0E0))
-            .padding(16.dp)
+            .background(
+                brush = Brush.linearGradient(
+                    colors = listOf(Color(0xFFBBDEFB), Color(0xFF64B5F6), Color(0xFF1976D2))
+                )
+            )
+            .padding(vertical = 32.dp)
     ) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 32.dp),
-            verticalArrangement = Arrangement.Top,
-            horizontalAlignment = Alignment.Start
-        ) {
-            Text(
-                text = name.value,
-                fontWeight = FontWeight.Bold,
-                fontSize = 24.sp,
-                color = Color.DarkGray,
-                modifier = Modifier.padding(bottom = 8.dp)
-            )
+        Column {
+            Card(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
+                elevation = CardDefaults.cardElevation(8.dp)
+            ) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
+                    verticalArrangement = Arrangement.Top,
+                    horizontalAlignment = Alignment.Start
+                ) {
+                    Text(
+                        text = name.value,
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 28.sp,
+                        color = Color(0xFF333333),
+                        modifier = Modifier.padding(bottom = 8.dp)
+                    )
 
-            Text(
-                text = description.value,
-                fontWeight = FontWeight.Medium,
-                fontSize = 16.sp,
-                color = Color.Gray,
-                modifier = Modifier.padding(bottom = 8.dp)
-            )
+                    HorizontalDivider(
+                        modifier = Modifier.padding(vertical = 8.dp),
+                        thickness = 1.dp,
+                        color = Color.Gray
+                    )
+
+                    Text(
+                        text = description.value,
+                        fontWeight = FontWeight.Normal,
+                        fontSize = 18.sp,
+                        color = Color(0xFF666666),
+                        modifier = Modifier.padding(bottom = 8.dp)
+                    )
+                }
+            }
         }
     }
-
 
 }

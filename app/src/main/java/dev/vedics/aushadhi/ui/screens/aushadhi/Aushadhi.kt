@@ -17,6 +17,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
@@ -57,12 +58,17 @@ fun AushadhiScreen(
     }
     with(LocalDensity.current) {
         Box(
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier
+                .fillMaxSize()
+                .background(
+                    brush = Brush.linearGradient(
+                        colors = listOf(Color(0xFFBBDEFB), Color(0xFF64B5F6), Color(0xFF1976D2))
+                    )
+                )
         ) {
             LazyColumn(
                 modifier = Modifier
-                    .fillMaxSize()
-                    .background(Color.LightGray),
+                    .fillMaxSize(),
                 contentPadding = PaddingValues(
                     top = WindowInsets.systemBars.getTop(this@with).toDp(),
                     bottom = bottomNavHeight.toDp()

@@ -17,6 +17,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
@@ -29,7 +30,6 @@ import dev.vedics.aushadhi.ui.components.BottomNavigationBar
 import dev.vedics.aushadhi.ui.components.ListItemMain
 import dev.vedics.aushadhi.utils.ADD_RECORD_SCREEN
 import dev.vedics.aushadhi.utils.ButtonType
-import dev.vedics.aushadhi.utils.RECORD_AUSHADHI
 import dev.vedics.aushadhi.utils.RECORD_DISEASE
 import dev.vedics.aushadhi.utils.ScreenType
 
@@ -53,19 +53,30 @@ fun DiseaseScreen(
     }
     with(LocalDensity.current) {
         Box(
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier
+                .fillMaxSize()
+                .background(
+                    brush = Brush.linearGradient(
+                        colors = listOf(Color(0xFFBBDEFB), Color(0xFF64B5F6), Color(0xFF1976D2))
+                    )
+                )
         ) {
             LazyColumn(
                 modifier = Modifier
-                    .fillMaxSize()
-                    .background(Color.LightGray),
+                    .fillMaxSize(),
                 contentPadding = PaddingValues(
                     top = WindowInsets.systemBars.getTop(this@with).toDp(),
                     bottom = bottomNavHeight.toDp()
                 )
             ) {
                 items(items) { item ->
-                    ListItemMain(diseaseList[item].id, diseaseList[item].name, diseaseList[item].description, navController, ScreenType.DISEASE)
+                    ListItemMain(
+                        diseaseList[item].id,
+                        diseaseList[item].name,
+                        diseaseList[item].description,
+                        navController,
+                        ScreenType.DISEASE
+                    )
                 }
             }
             BottomNavigationBar(navController = navController,

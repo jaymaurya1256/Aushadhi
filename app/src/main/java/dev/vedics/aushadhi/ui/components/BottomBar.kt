@@ -17,6 +17,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -30,13 +31,20 @@ import dev.vedics.aushadhi.utils.PATIENT_SCREEN
 fun BottomNavigationBar(navController: NavController, modifier: Modifier = Modifier) {
     Row(
         modifier = modifier
+            .pointerInput(Unit) {
+                awaitPointerEventScope {
+                    while (true) {
+                        awaitPointerEvent()
+                    }
+                }
+            }
             .background(Color.Transparent)
             .fillMaxWidth()
             .background(Color.White, RoundedCornerShape(
                 topStart = 16.dp, topEnd = 16.dp
             ))
             .navigationBarsPadding()
-            .padding(16.dp),
+            .padding(top = 16.dp, start = 4.dp, end = 4.dp, bottom = 4.dp),
         horizontalArrangement = Arrangement.SpaceAround
     ) {
         Icon(
