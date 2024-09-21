@@ -40,6 +40,7 @@ import dev.vedics.aushadhi.ui.screens.add.AddRecordViewModel
 import dev.vedics.aushadhi.ui.theme.Orange
 import dev.vedics.aushadhi.utils.AUSHADHI_SCREEN
 import dev.vedics.aushadhi.utils.DISEASE_SCREEN
+import dev.vedics.aushadhi.utils.ErrorTypes
 import dev.vedics.aushadhi.utils.RECORD_AUSHADHI
 import dev.vedics.aushadhi.utils.RECORD_DISEASE
 import dev.vedics.aushadhi.utils.RECORD_PATIENT
@@ -57,11 +58,12 @@ fun AddRecord(
 ) {
     var name by remember { mutableStateOf("") }
     var description by remember { mutableStateOf("") }
+    var errorTypes by remember { mutableStateOf<ErrorTypes?>(null) }
 
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("$recordType Details") },
+                title = { Text("Add $recordType") },
                 colors = TopAppBarDefaults.smallTopAppBarColors(
                     containerColor = Orange, titleContentColor = Color.White
                 )
@@ -90,7 +92,8 @@ fun AddRecord(
                         fontSize = 16.sp,
                         fontFamily = FontFamily.SansSerif,
                         fontWeight = FontWeight.Normal
-                    )
+                    ),
+                    isError = errorTypes == ErrorTypes.NAME_EMPTY
                 )
 
                 Spacer(modifier = Modifier.height(16.dp))
@@ -112,31 +115,40 @@ fun AddRecord(
                         imeAction = ImeAction.Done, keyboardType = KeyboardType.Text
                     ),
                     maxLines = 6,
-                    visualTransformation = VisualTransformation.None
+                    visualTransformation = VisualTransformation.None,
+                    isError = errorTypes == ErrorTypes.DESCRIPTION_EMPTY
                 )
 
                 Spacer(modifier = Modifier.height(24.dp))
 
                 Button(
                     onClick = {
-                        CoroutineScope(Dispatchers.IO).launch {
-                            when (recordType) {
-                                RECORD_AUSHADHI -> {
-                                    viewModel.saveAushadhiRecords(
-                                        name = name, description = description
-                                    )
-                                }
+                        if (name.isEmpty() || description.isEmpty()) {
+                            errorTypes = when {
+                                name.isEmpty() -> ErrorTypes.NAME_EMPTY
+                                description.isEmpty() -> ErrorTypes.DESCRIPTION_EMPTY
+                                else -> ErrorTypes.NO_ERROR
+                            }
+                        } else {
+                            CoroutineScope(Dispatchers.IO).launch {
+                                when (recordType) {
+                                    RECORD_AUSHADHI -> {
+                                        viewModel.saveAushadhiRecords(
+                                            name = name, description = description
+                                        )
+                                    }
 
-                                RECORD_DISEASE -> {
-                                    viewModel.saveDiseaseRecords(
-                                        name = name, description = description
-                                    )
+                                    RECORD_DISEASE -> {
+                                        viewModel.saveDiseaseRecords(
+                                            name = name, description = description
+                                        )
+                                    }
                                 }
                             }
-                        }
-                        when (recordType) {
-                            RECORD_AUSHADHI -> navController.navigate(AUSHADHI_SCREEN)
-                            RECORD_DISEASE -> navController.navigate(DISEASE_SCREEN)
+                            when (recordType) {
+                                RECORD_AUSHADHI -> navController.navigate(AUSHADHI_SCREEN)
+                                RECORD_DISEASE -> navController.navigate(DISEASE_SCREEN)
+                            }
                         }
                     },
                     colors = ButtonDefaults.buttonColors(containerColor = Orange),

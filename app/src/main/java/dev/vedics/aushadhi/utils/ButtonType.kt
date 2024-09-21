@@ -6,7 +6,3 @@ enum class ButtonType {
     ADD_DISEASE
 }
 
-enum class ScreenType {
-    AUSHADHI,
-    DISEASE
-}
