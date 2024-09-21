@@ -45,7 +45,7 @@ fun DiseaseDetail(navController: NavController, id: Int, viewModel: DiseaseViewM
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(vertical = 16.dp),
+                .padding(vertical = 32.dp),
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.Start
         ) {

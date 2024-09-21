@@ -44,7 +44,7 @@ fun AushadhiDetail(navController: NavController, id: Int, viewModel: AushadhiVie
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(vertical = 16.dp),
+                .padding(vertical = 32.dp),
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.Start
         ) {
