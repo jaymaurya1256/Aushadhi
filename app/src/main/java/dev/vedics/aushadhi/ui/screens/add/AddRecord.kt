@@ -34,6 +34,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import dev.vedics.aushadhi.ui.components.AushadhiScreen
+import dev.vedics.aushadhi.ui.components.DiseaseScreen
 import dev.vedics.aushadhi.ui.theme.Orange
 import dev.vedics.aushadhi.utils.AUSHADHI_SCREEN
 import dev.vedics.aushadhi.utils.DISEASE_SCREEN
@@ -54,8 +56,8 @@ fun AddRecord(
         viewModel.databaseOperationResult.collect { it ->
             if (it == ErrorTypes.NO_ERROR) {
                 when (recordType) {
-                    RECORD_AUSHADHI -> navController.navigate(AUSHADHI_SCREEN)
-                    RECORD_DISEASE -> navController.navigate(DISEASE_SCREEN)
+                    RECORD_AUSHADHI -> navController.navigate(AushadhiScreen)
+                    RECORD_DISEASE -> navController.navigate(DiseaseScreen)
                 }
             }else {
                 //TODO: figure out how to show error message here in non-activity class

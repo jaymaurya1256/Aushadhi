@@ -27,6 +27,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import dev.vedics.aushadhi.database.entity.Disease
 import dev.vedics.aushadhi.ui.components.AddButton
+import dev.vedics.aushadhi.ui.components.AddRecordScreen
 import dev.vedics.aushadhi.ui.components.BottomNavigationBar
 import dev.vedics.aushadhi.ui.components.ListItemMain
 import dev.vedics.aushadhi.utils.ADD_RECORD_SCREEN
@@ -88,7 +89,7 @@ fun DiseaseScreen(
                     .padding(vertical = bottomNavHeight.toDp() + 8.dp)
                     .padding(16.dp)
             ) {
-                navController.navigate(route = "$ADD_RECORD_SCREEN/$RECORD_DISEASE")
+                navController.navigate(AddRecordScreen(RECORD_DISEASE))
             }
         }
     }

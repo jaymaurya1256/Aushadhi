@@ -42,6 +42,7 @@ import dev.vedics.aushadhi.database.entity.patient.Patient
 import dev.vedics.aushadhi.database.entity.patient.PatientInfo
 import dev.vedics.aushadhi.database.entity.patient.Visit
 import dev.vedics.aushadhi.ui.components.AddButton
+import dev.vedics.aushadhi.ui.components.AddRecordScreen
 import dev.vedics.aushadhi.ui.components.BottomNavigationBar
 import dev.vedics.aushadhi.ui.components.ListItemMainPatient
 import dev.vedics.aushadhi.ui.screens.disease.DiseaseViewModel
@@ -100,7 +101,7 @@ fun PatientScreen(navController: NavController, viewModel: PatientViewModel = hi
                     .padding(16.dp)
             ) {
                 //TODO make a separate route as it would have different screen from add record due to the complexity in the UI
-                navController.navigate(route = "$ADD_RECORD_SCREEN/$RECORD_PATIENT")
+                navController.navigate(AddRecordScreen(RECORD_PATIENT))
             }
         }
     }

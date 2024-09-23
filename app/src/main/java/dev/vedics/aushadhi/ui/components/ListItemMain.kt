@@ -35,11 +35,11 @@ fun ListItemMain(id: Int, name: String, description: String, navController: NavC
             .clickable {
                 when (screenType) {
                     ScreenType.AUSHADHI -> {
-                        navController.navigate("$AUSHADHI_DETAIL_SCREEN/${id}")
+                        navController.navigate(AushadhiDetailScreen(id = id))
                     }
 
                     ScreenType.DISEASE -> {
-                        navController.navigate("$DISEASE_DETAIL_SCREEN/${id}")
+                        navController.navigate(DiseaseDetailScreen(id = id))
                     }
                 }
             },
