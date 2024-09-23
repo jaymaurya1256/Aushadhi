@@ -1,5 +1,6 @@
 package dev.vedics.aushadhi.ui.screens.add
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -19,10 +20,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -36,17 +34,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import dev.vedics.aushadhi.ui.screens.add.AddRecordViewModel
 import dev.vedics.aushadhi.ui.theme.Orange
 import dev.vedics.aushadhi.utils.AUSHADHI_SCREEN
 import dev.vedics.aushadhi.utils.DISEASE_SCREEN
 import dev.vedics.aushadhi.utils.ErrorTypes
 import dev.vedics.aushadhi.utils.RECORD_AUSHADHI
 import dev.vedics.aushadhi.utils.RECORD_DISEASE
-import dev.vedics.aushadhi.utils.RECORD_PATIENT
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -56,9 +49,20 @@ fun AddRecord(
     viewModel: AddRecordViewModel = hiltViewModel()
 
 ) {
-    var name by remember { mutableStateOf("") }
-    var description by remember { mutableStateOf("") }
-    var errorTypes by remember { mutableStateOf<ErrorTypes?>(null) }
+
+    LaunchedEffect(key1 = viewModel.databaseOperationResult) {
+        viewModel.databaseOperationResult.collect { it ->
+            if (it == ErrorTypes.NO_ERROR) {
+                when (recordType) {
+                    RECORD_AUSHADHI -> navController.navigate(AUSHADHI_SCREEN)
+                    RECORD_DISEASE -> navController.navigate(DISEASE_SCREEN)
+                }
+            }else {
+                //TODO: figure out how to show error message here in non-activity class
+            }
+        }
+    }
+
 
     Scaffold(
         topBar = {
@@ -80,8 +84,8 @@ fun AddRecord(
                 verticalArrangement = Arrangement.Top
             ) {
                 OutlinedTextField(
-                    value = name,
-                    onValueChange = { name = it },
+                    value = viewModel.name,
+                    onValueChange = { viewModel.name = it },
                     label = { Text("$recordType Name") },
                     modifier = Modifier.fillMaxWidth(),
                     keyboardOptions = KeyboardOptions.Default.copy(
@@ -93,14 +97,14 @@ fun AddRecord(
                         fontFamily = FontFamily.SansSerif,
                         fontWeight = FontWeight.Normal
                     ),
-                    isError = errorTypes == ErrorTypes.NAME_EMPTY
+                    isError = viewModel.errorTypes == ErrorTypes.NAME_EMPTY
                 )
 
                 Spacer(modifier = Modifier.height(16.dp))
 
                 OutlinedTextField(
-                    value = description,
-                    onValueChange = { description = it },
+                    value = viewModel.description,
+                    onValueChange = { viewModel.description = it },
                     label = { Text("$recordType Description") },
                     modifier = Modifier
                         .fillMaxWidth()
@@ -116,38 +120,32 @@ fun AddRecord(
                     ),
                     maxLines = 6,
                     visualTransformation = VisualTransformation.None,
-                    isError = errorTypes == ErrorTypes.DESCRIPTION_EMPTY
+                    isError = viewModel.errorTypes == ErrorTypes.DESCRIPTION_EMPTY
                 )
 
                 Spacer(modifier = Modifier.height(24.dp))
 
                 Button(
                     onClick = {
-                        if (name.isEmpty() || description.isEmpty()) {
-                            errorTypes = when {
-                                name.isEmpty() -> ErrorTypes.NAME_EMPTY
-                                description.isEmpty() -> ErrorTypes.DESCRIPTION_EMPTY
+                        if (viewModel.name.isEmpty() || viewModel.description.isEmpty()) {
+                            viewModel.errorTypes = when {
+                                viewModel.name.isEmpty() -> ErrorTypes.NAME_EMPTY
+                                viewModel.description.isEmpty() -> ErrorTypes.DESCRIPTION_EMPTY
                                 else -> ErrorTypes.NO_ERROR
                             }
                         } else {
-                            CoroutineScope(Dispatchers.IO).launch {
-                                when (recordType) {
-                                    RECORD_AUSHADHI -> {
-                                        viewModel.saveAushadhiRecords(
-                                            name = name, description = description
-                                        )
-                                    }
-
-                                    RECORD_DISEASE -> {
-                                        viewModel.saveDiseaseRecords(
-                                            name = name, description = description
-                                        )
-                                    }
-                                }
-                            }
                             when (recordType) {
-                                RECORD_AUSHADHI -> navController.navigate(AUSHADHI_SCREEN)
-                                RECORD_DISEASE -> navController.navigate(DISEASE_SCREEN)
+                                RECORD_AUSHADHI -> {
+                                    viewModel.saveAushadhiRecords(
+                                        name = viewModel.name, description = viewModel.description
+                                    )
+                                }
+
+                                RECORD_DISEASE -> {
+                                    viewModel.saveDiseaseRecords(
+                                        name = viewModel.name, description = viewModel.description
+                                    )
+                                }
                             }
                         }
                     },

@@ -1,13 +1,12 @@
 package dev.vedics.aushadhi.ui.components
 
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.unit.dp
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import dev.vedics.Disease.ui.screens.disease.DiseaseDetail
+import dev.vedics.aushadhi.ui.screens.disease.DiseaseDetail
 import dev.vedics.aushadhi.ui.screens.add.AddRecord
 import dev.vedics.aushadhi.ui.screens.aushadhi.AushadhiDetail
 import dev.vedics.aushadhi.ui.screens.aushadhi.AushadhiScreen
@@ -21,7 +20,6 @@ import dev.vedics.aushadhi.utils.DISEASE_DETAIL_ID
 import dev.vedics.aushadhi.utils.DISEASE_DETAIL_SCREEN
 import dev.vedics.aushadhi.utils.DISEASE_SCREEN
 import dev.vedics.aushadhi.utils.PATIENT_SCREEN
-import dev.vedics.aushadhi.utils.RECORD_AUSHADHI
 import dev.vedics.aushadhi.utils.RECORD_TYPE
 
 @Composable
@@ -59,7 +57,7 @@ fun AppNavigation() {
             arguments = listOf(navArgument(AUSHADHI_DETAIL_ID) { type = NavType.IntType })
         ) { backStackEntry ->
             val id = backStackEntry.arguments?.getInt(AUSHADHI_DETAIL_ID)
-            AushadhiDetail(navController = navController, id = id ?: 0)
+            AushadhiDetail(id = id ?: 0)
         }
 
         composable(

@@ -1,4 +1,4 @@
-package dev.vedics.Disease.ui.screens.disease
+package dev.vedics.aushadhi.ui.screens.disease
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -32,13 +32,11 @@ import dev.vedics.aushadhi.ui.screens.disease.DiseaseViewModel
 fun DiseaseDetail(navController: NavController, id: Int, viewModel: DiseaseViewModel = hiltViewModel()) {
 
     val disease = viewModel.getDiseaseById(id)
-    val name = remember { mutableStateOf("") }
-    val description =  remember { mutableStateOf("") }
 
     LaunchedEffect(key1 = disease) {
         disease.collect {
-            name.value = it.name
-            description.value = it.description
+            viewModel.name.value = it.name
+            viewModel.description.value = it.description
         }
     }
 
@@ -67,7 +65,7 @@ fun DiseaseDetail(navController: NavController, id: Int, viewModel: DiseaseViewM
                     horizontalAlignment = Alignment.Start
                 ) {
                     Text(
-                        text = name.value,
+                        text = viewModel.name.value,
                         fontWeight = FontWeight.Bold,
                         fontSize = 28.sp,
                         color = Color(0xFF333333),
@@ -81,7 +79,7 @@ fun DiseaseDetail(navController: NavController, id: Int, viewModel: DiseaseViewM
                     )
 
                     Text(
-                        text = description.value,
+                        text = viewModel.description.value,
                         fontWeight = FontWeight.Normal,
                         fontSize = 18.sp,
                         color = Color(0xFF666666),

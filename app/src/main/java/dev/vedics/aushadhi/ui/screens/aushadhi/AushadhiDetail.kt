@@ -26,16 +26,14 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 
 @Composable
-fun AushadhiDetail(navController: NavController, id: Int, viewModel: AushadhiViewModel = hiltViewModel()) {
+fun AushadhiDetail(id: Int, viewModel: AushadhiViewModel = hiltViewModel()) {
 
     val aushadhi = viewModel.getAushadhiById(id)
-    val name = remember { mutableStateOf("") }
-    val description =  remember { mutableStateOf("") }
 
     LaunchedEffect(key1 = aushadhi) {
         aushadhi.collect {
-            name.value = it.name
-            description.value = it.description
+            viewModel.name.value = it.name
+            viewModel.description.value = it.description
         }
     }
 
@@ -64,7 +62,7 @@ fun AushadhiDetail(navController: NavController, id: Int, viewModel: AushadhiVie
                     horizontalAlignment = Alignment.Start
                 ) {
                     Text(
-                        text = name.value,
+                        text = viewModel.name.value,
                         fontWeight = FontWeight.Bold,
                         fontSize = 28.sp,
                         color = Color(0xFF333333),
@@ -78,7 +76,7 @@ fun AushadhiDetail(navController: NavController, id: Int, viewModel: AushadhiVie
                     )
 
                     Text(
-                        text = description.value,
+                        text = viewModel.description.value,
                         fontWeight = FontWeight.Normal,
                         fontSize = 18.sp,
                         color = Color(0xFF666666),

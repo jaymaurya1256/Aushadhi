@@ -54,19 +54,10 @@ import dev.vedics.aushadhi.utils.RECORD_PATIENT
 fun PatientScreen(navController: NavController, viewModel: PatientViewModel = hiltViewModel()) {
 
     var bottomNavHeight by remember { mutableIntStateOf(0) }
-    var items by remember { mutableIntStateOf(0) }
-    var patientList by remember {
-        mutableStateOf(
-            listOf(
-                PatientInfo(0, "unknown", 0)
-            )
-        )
-    }
 
-    LaunchedEffect(key1 = items) {
+    LaunchedEffect(key1 = viewModel.patientList) {
         viewModel.listOfPatientsInfo.collect {
-            patientList = it
-            items = patientList.size
+            viewModel.patientList = it
         }
     }
 
@@ -88,10 +79,10 @@ fun PatientScreen(navController: NavController, viewModel: PatientViewModel = hi
                     bottom = bottomNavHeight.toDp()
                 )
             ) {
-                items(items) { item ->
+                items(viewModel.patientList) { item ->
                     ListItemMainPatient(
-                        patientList[item].name,
-                        patientList[item].patientId
+                        item.name,
+                        item.patientId
                     )
                 }
             }

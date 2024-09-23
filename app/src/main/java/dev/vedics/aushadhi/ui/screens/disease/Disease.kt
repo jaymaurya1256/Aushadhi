@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -40,15 +41,10 @@ fun DiseaseScreen(
 ) {
 
     var bottomNavHeight by remember { mutableIntStateOf(0) }
-    var items by remember { mutableIntStateOf(0) }
-    var diseaseList by remember {
-        mutableStateOf(listOf(Disease(0, "", "")))
-    }
 
-    LaunchedEffect(key1 = items) {
+    LaunchedEffect(key1 = viewModel.diseaseList) {
         viewModel.listOfDisease.collect {
-            diseaseList = it
-            items = diseaseList.size
+            viewModel.diseaseList = it
         }
     }
     with(LocalDensity.current) {
@@ -69,11 +65,11 @@ fun DiseaseScreen(
                     bottom = bottomNavHeight.toDp()
                 )
             ) {
-                items(items) { item ->
+                items(viewModel.diseaseList) { item ->
                     ListItemMain(
-                        diseaseList[item].id,
-                        diseaseList[item].name,
-                        diseaseList[item].description,
+                        item.id,
+                        item.name,
+                        item.description,
                         navController,
                         ScreenType.DISEASE
                     )
@@ -97,5 +93,3 @@ fun DiseaseScreen(
         }
     }
 }
-
-
