@@ -10,11 +10,9 @@ import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -26,12 +24,10 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import dev.vedics.aushadhi.database.entity.Disease
 import dev.vedics.aushadhi.ui.components.AddButton
 import dev.vedics.aushadhi.ui.components.AddRecordScreen
 import dev.vedics.aushadhi.ui.components.BottomNavigationBar
 import dev.vedics.aushadhi.ui.components.ListItemMain
-import dev.vedics.aushadhi.utils.ADD_RECORD_SCREEN
 import dev.vedics.aushadhi.utils.ButtonType
 import dev.vedics.aushadhi.utils.RECORD_DISEASE
 import dev.vedics.aushadhi.utils.ScreenType

@@ -2,14 +2,12 @@ package dev.vedics.aushadhi.ui.screens.add
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.vedics.aushadhi.database.dao.AushadhiDao
 import dev.vedics.aushadhi.database.dao.DiseaseDao
-import dev.vedics.aushadhi.database.dao.PatientsDao
 import dev.vedics.aushadhi.database.entity.Aushadhi
 import dev.vedics.aushadhi.database.entity.Disease
 import dev.vedics.aushadhi.utils.ErrorTypes
