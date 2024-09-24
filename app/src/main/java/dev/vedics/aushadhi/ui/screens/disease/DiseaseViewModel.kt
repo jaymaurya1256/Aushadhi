@@ -14,10 +14,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class DiseaseViewModel @Inject constructor(private val diseaseDao: DiseaseDao): ViewModel() {
-    var diseaseList by mutableStateOf(listOf(Disease(0, "", "")))
-
     val name = mutableStateOf("")
-    val description =  mutableStateOf("")
+    val description = mutableStateOf("")
 
     val listOfDisease = diseaseDao.getAll()
 

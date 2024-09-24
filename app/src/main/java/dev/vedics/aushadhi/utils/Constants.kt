@@ -15,15 +15,6 @@ const val VISIT_PRESCRIPTION = "prescription"
 const val Visit_DIAGNOSIS = "diagnosis"
 
 
-//NAVIGATION CONSTANTS
-const val AUSHADHI_SCREEN = "aushadhi"
-const val PATIENT_SCREEN = "patient"
-const val DISEASE_SCREEN = "disease"
-const val ADD_RECORD_SCREEN = "addRecordScreen"
-const val AUSHADHI_DETAIL_SCREEN = "aushadhiDetailScreen"
-const val DISEASE_DETAIL_SCREEN = "diseaseDetailScreen"
-const val PATIENT_DETAIL_SCREEN = "patientDetailScreen"
-
 //ADD RECORD CONSTANTS
 const val RECORD_AUSHADHI = "Aushadhi"
 const val RECORD_DISEASE = "Disease"

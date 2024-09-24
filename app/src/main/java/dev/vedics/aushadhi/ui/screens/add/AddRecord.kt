@@ -1,6 +1,5 @@
 package dev.vedics.aushadhi.ui.screens.add
 
-import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -37,8 +36,6 @@ import androidx.navigation.NavController
 import dev.vedics.aushadhi.ui.components.AushadhiScreen
 import dev.vedics.aushadhi.ui.components.DiseaseScreen
 import dev.vedics.aushadhi.ui.theme.Orange
-import dev.vedics.aushadhi.utils.AUSHADHI_SCREEN
-import dev.vedics.aushadhi.utils.DISEASE_SCREEN
 import dev.vedics.aushadhi.utils.ErrorTypes
 import dev.vedics.aushadhi.utils.RECORD_AUSHADHI
 import dev.vedics.aushadhi.utils.RECORD_DISEASE
@@ -49,10 +46,10 @@ fun AddRecord(
     navController: NavController,
     recordType: String,
     viewModel: AddRecordViewModel = hiltViewModel()
-
 ) {
 
-    LaunchedEffect(key1 = viewModel.databaseOperationResult) {
+
+    LaunchedEffect(key1 = Unit) {
         viewModel.databaseOperationResult.collect { it ->
             if (it == ErrorTypes.NO_ERROR) {
                 when (recordType) {

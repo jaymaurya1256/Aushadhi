@@ -11,6 +11,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -47,12 +48,7 @@ fun AushadhiScreen(
 ) {
 
     var bottomNavHeight by remember { mutableIntStateOf(0) }
-
-    LaunchedEffect(key1 = viewModel.aushadhiList) {
-        viewModel.listOfAushadhi.collect {
-            viewModel.aushadhiList = it
-        }
-    }
+    val listOfAushadhi = viewModel.listOfAushadhi.collectAsState(initial = emptyList())
     with(LocalDensity.current) {
         Box(
             modifier = Modifier
@@ -71,7 +67,7 @@ fun AushadhiScreen(
                     bottom = bottomNavHeight.toDp()
                 )
             ) {
-                items(viewModel.aushadhiList) { item ->
+                items(listOfAushadhi.value) { item ->
                     ListItemMain(item.id, item.name, item.description, navController, screenType = ScreenType.AUSHADHI)
                 }
             }

@@ -20,6 +20,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -55,12 +56,7 @@ import dev.vedics.aushadhi.utils.RECORD_PATIENT
 fun PatientScreen(navController: NavController, viewModel: PatientViewModel = hiltViewModel()) {
 
     var bottomNavHeight by remember { mutableIntStateOf(0) }
-
-    LaunchedEffect(key1 = viewModel.patientList) {
-        viewModel.listOfPatientsInfo.collect {
-            viewModel.patientList = it
-        }
-    }
+    val patientList by viewModel.listOfPatientsInfo.collectAsState(initial = emptyList())
 
     with(LocalDensity.current) {
         Box(
@@ -80,7 +76,7 @@ fun PatientScreen(navController: NavController, viewModel: PatientViewModel = hi
                     bottom = bottomNavHeight.toDp()
                 )
             ) {
-                items(viewModel.patientList) { item ->
+                items(patientList) { item ->
                     ListItemMainPatient(
                         item.name,
                         item.patientId

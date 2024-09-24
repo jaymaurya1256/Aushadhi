@@ -11,6 +11,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -42,12 +43,7 @@ fun DiseaseScreen(
 ) {
 
     var bottomNavHeight by remember { mutableIntStateOf(0) }
-
-    LaunchedEffect(key1 = viewModel.diseaseList) {
-        viewModel.listOfDisease.collect {
-            viewModel.diseaseList = it
-        }
-    }
+    var diseaseList = viewModel.listOfDisease.collectAsState(initial = emptyList())
     with(LocalDensity.current) {
         Box(
             modifier = Modifier
@@ -66,7 +62,7 @@ fun DiseaseScreen(
                     bottom = bottomNavHeight.toDp()
                 )
             ) {
-                items(viewModel.diseaseList) { item ->
+                items(diseaseList.value) { item ->
                     ListItemMain(
                         item.id,
                         item.name,

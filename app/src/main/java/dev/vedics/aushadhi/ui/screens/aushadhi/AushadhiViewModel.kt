@@ -19,7 +19,6 @@ class AushadhiViewModel @Inject constructor(private val aushadhiDao: AushadhiDao
 
     val listOfAushadhi = aushadhiDao.getAll()
 
-    var aushadhiList by mutableStateOf(listOf(Aushadhi(0, "", "")))
 
     fun getAushadhiById(id: Int): Flow<Aushadhi> = aushadhiDao.getAushadhiById(id)
 }

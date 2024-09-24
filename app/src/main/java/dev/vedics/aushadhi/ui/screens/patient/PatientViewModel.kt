@@ -15,11 +15,5 @@ import javax.inject.Inject
 @HiltViewModel
 class PatientViewModel @Inject constructor(patientDao: PatientsDao) : ViewModel() {
     val listOfPatientsInfo = patientDao.getAll()
-
-    var patientList by mutableStateOf(
-        listOf(
-            PatientInfo(0, "unknown", 0)
-        )
-    )
 }
 

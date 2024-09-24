@@ -33,7 +33,7 @@ class AddRecordViewModel @Inject constructor(
             try {
                 aushadhiDao.insert(Aushadhi(name = name, description = description))
                 databaseOperationResult.tryEmit(ErrorTypes.NO_ERROR)
-            }catch (e: Exception) {
+            } catch (e: Exception) {
                 databaseOperationResult.tryEmit(ErrorTypes.DATABASE_ERROR)
             }
         }
@@ -44,7 +44,7 @@ class AddRecordViewModel @Inject constructor(
             try {
                 diseaseDao.insert(Disease(name = name, description = description))
                 databaseOperationResult.tryEmit(ErrorTypes.NO_ERROR)
-            }catch (e: Exception) {
+            } catch (e: Exception) {
                 databaseOperationResult.tryEmit(ErrorTypes.DATABASE_ERROR)
             }
         }
