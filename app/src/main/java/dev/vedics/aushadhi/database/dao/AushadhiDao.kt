@@ -7,6 +7,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import dev.vedics.aushadhi.database.entity.Aushadhi
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface AushadhiDao {
@@ -20,5 +21,8 @@ interface AushadhiDao {
     suspend fun update(aushadhi: Aushadhi)
 
     @Query("SELECT * FROM aushadhi")
-    suspend fun getAll(): List<Aushadhi>
+    fun getAll(): Flow<List<Aushadhi>>
+
+    @Query("SELECT * FROM aushadhi WHERE id = :id")
+    fun getAushadhiById(id: Int): Flow<Aushadhi>
 }

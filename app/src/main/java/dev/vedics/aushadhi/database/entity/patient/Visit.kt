@@ -20,7 +20,7 @@ import dev.vedics.aushadhi.utils.VISIT_PATIENT_ID
 )
 data class Visit(
     @PrimaryKey(autoGenerate = true) val visitId: Int = 0,
-    val patientId: Int, // Foreign key
+    val patientId: Long, // Foreign key
     val visitDate: Long,
     val prescription: String,
     val diagnosis: String

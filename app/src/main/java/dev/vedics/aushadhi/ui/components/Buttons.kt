@@ -15,13 +15,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
-import dev.vedics.aushadhi.ui.theme.Orange
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.vedics.aushadhi.R
+import dev.vedics.aushadhi.ui.theme.Orange
 import dev.vedics.aushadhi.ui.theme.White
 import dev.vedics.aushadhi.utils.ButtonType
 
@@ -34,7 +34,7 @@ fun AddButton(
     backgroundColor: Color = Orange,
     contentColor: Color = White,
     size: Dp = 35.dp,
-    onClick: () -> Unit
+    onClick: () -> Unit = {}
 ) {
     Column(
         modifier = modifier
