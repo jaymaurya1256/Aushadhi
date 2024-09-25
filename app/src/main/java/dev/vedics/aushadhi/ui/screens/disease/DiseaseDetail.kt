@@ -30,8 +30,8 @@ fun DiseaseDetail(navController: NavController, id: Int, viewModel: DiseaseViewM
 
     LaunchedEffect(key1 = disease) {
         disease.collect {
-            viewModel.name.value = it.name
-            viewModel.description.value = it.description
+            viewModel.name = it.name
+            viewModel.description = it.description
         }
     }
 
@@ -60,7 +60,7 @@ fun DiseaseDetail(navController: NavController, id: Int, viewModel: DiseaseViewM
                     horizontalAlignment = Alignment.Start
                 ) {
                     Text(
-                        text = viewModel.name.value,
+                        text = viewModel.name,
                         fontWeight = FontWeight.Bold,
                         fontSize = 28.sp,
                         color = Color(0xFF333333),
@@ -74,7 +74,7 @@ fun DiseaseDetail(navController: NavController, id: Int, viewModel: DiseaseViewM
                     )
 
                     Text(
-                        text = viewModel.description.value,
+                        text = viewModel.description,
                         fontWeight = FontWeight.Normal,
                         fontSize = 18.sp,
                         color = Color(0xFF666666),

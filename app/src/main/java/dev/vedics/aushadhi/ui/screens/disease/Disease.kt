@@ -39,7 +39,7 @@ fun DiseaseScreen(
 ) {
 
     var bottomNavHeight by remember { mutableIntStateOf(0) }
-    var diseaseList = viewModel.listOfDisease.collectAsState(initial = emptyList())
+    val diseaseList = viewModel.listOfDisease.collectAsState(initial = emptyList())
     with(LocalDensity.current) {
         Box(
             modifier = Modifier

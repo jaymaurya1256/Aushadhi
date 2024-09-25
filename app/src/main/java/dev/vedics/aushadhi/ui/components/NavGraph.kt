@@ -64,6 +64,7 @@ object DiseaseScreen
 data class DiseaseDetailScreen(
     val id: Int
 )
+
 @Serializable
 object PatientScreen
 

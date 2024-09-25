@@ -25,13 +25,9 @@ import androidx.hilt.navigation.compose.hiltViewModel
 @Composable
 fun AushadhiDetail(id: Int, viewModel: AushadhiViewModel = hiltViewModel()) {
 
-    val aushadhi = viewModel.getAushadhiById(id)
 
-    LaunchedEffect(key1 = aushadhi) {
-        aushadhi.collect {
-            viewModel.name.value = it.name
-            viewModel.description.value = it.description
-        }
+    LaunchedEffect(key1 = Unit) {
+        viewModel.fetchAndSaveAushadhiById(id)
     }
 
     Box(
@@ -59,7 +55,7 @@ fun AushadhiDetail(id: Int, viewModel: AushadhiViewModel = hiltViewModel()) {
                     horizontalAlignment = Alignment.Start
                 ) {
                     Text(
-                        text = viewModel.name.value,
+                        text = viewModel.name,
                         fontWeight = FontWeight.Bold,
                         fontSize = 28.sp,
                         color = Color(0xFF333333),
@@ -73,7 +69,7 @@ fun AushadhiDetail(id: Int, viewModel: AushadhiViewModel = hiltViewModel()) {
                     )
 
                     Text(
-                        text = viewModel.description.value,
+                        text = viewModel.description,
                         fontWeight = FontWeight.Normal,
                         fontSize = 18.sp,
                         color = Color(0xFF666666),
