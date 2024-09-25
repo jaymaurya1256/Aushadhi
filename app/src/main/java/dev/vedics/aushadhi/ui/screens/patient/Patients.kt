@@ -45,12 +45,13 @@ fun PatientScreen(navController: NavController, viewModel: PatientViewModel = hi
 
     with(LocalDensity.current) {
         Box(
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier
+                .fillMaxSize()
                 .background(
-                brush = Brush.linearGradient(
-                    colors = listOf(Color(0xFFBBDEFB), Color(0xFF64B5F6), Color(0xFF1976D2))
+                    brush = Brush.linearGradient(
+                        colors = listOf(Color(0xFFBBDEFB), Color(0xFF64B5F6), Color(0xFF1976D2))
+                    )
                 )
-            )
 
         ) {
             LazyColumn(
@@ -61,7 +62,11 @@ fun PatientScreen(navController: NavController, viewModel: PatientViewModel = hi
                     bottom = bottomNavHeight.toDp()
                 )
             ) {
-                items(patientList) { item ->
+                items(
+                    patientList,
+                    key = { patient -> patient.id }
+                )
+                { item ->
                     ListItemMainPatient(
                         item.name,
                         item.patientId

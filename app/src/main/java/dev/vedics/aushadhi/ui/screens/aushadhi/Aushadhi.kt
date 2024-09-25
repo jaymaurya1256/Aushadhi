@@ -62,8 +62,17 @@ fun AushadhiScreen(
                     bottom = bottomNavHeight.toDp()
                 )
             ) {
-                items(listOfAushadhi.value) { item ->
-                    ListItemMain(item.id, item.name, item.description, navController, screenType = ScreenType.AUSHADHI)
+                items(
+                    listOfAushadhi.value,
+                    key = { aushadhi -> aushadhi.id }
+                ) { item ->
+                    ListItemMain(
+                        item.id,
+                        item.name,
+                        item.description,
+                        navController,
+                        screenType = ScreenType.AUSHADHI
+                    )
                 }
             }
 
@@ -80,7 +89,9 @@ fun AushadhiScreen(
                     .padding(vertical = bottomNavHeight.toDp() + 8.dp)
                     .padding(16.dp)
             ) {
-                navController.navigate(AddRecordScreen(RECORD_AUSHADHI))
+                navController.navigate(AddRecordScreen(RECORD_AUSHADHI)) {
+                    launchSingleTop = true
+                }
             }
         }
     }

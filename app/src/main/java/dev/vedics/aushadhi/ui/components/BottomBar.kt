@@ -47,7 +47,9 @@ fun BottomNavigationBar(navController: NavController, modifier: Modifier = Modif
                 .size(48.dp)
                 .clip(CircleShape)
                 .clickable {
-                    navController.navigate(AushadhiScreen)
+                    navController.navigate(AushadhiScreen) {
+                        launchSingleTop = true
+                    }
                 },
             painter = painterResource(id = R.drawable.aushadhi),
             contentDescription = "Aushadhi",
@@ -58,7 +60,9 @@ fun BottomNavigationBar(navController: NavController, modifier: Modifier = Modif
                 .size(48.dp)
                 .clip(CircleShape)
                 .clickable {
-                    navController.navigate(DiseaseScreen)
+                    navController.navigate(DiseaseScreen) {
+                        launchSingleTop = true
+                    }
                 },
             painter = painterResource(id = R.drawable.disease),
             contentDescription = "Disease",
@@ -69,7 +73,9 @@ fun BottomNavigationBar(navController: NavController, modifier: Modifier = Modif
                 .size(48.dp)
                 .clip(CircleShape)
                 .clickable {
-                    navController.navigate(PatientScreen)
+                    navController.navigate(PatientScreen) {
+                        launchSingleTop = true
+                    }
                 },
             painter = painterResource(id = R.drawable.patient),
             contentDescription = "Patient",

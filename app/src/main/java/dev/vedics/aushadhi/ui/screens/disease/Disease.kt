@@ -58,7 +58,10 @@ fun DiseaseScreen(
                     bottom = bottomNavHeight.toDp()
                 )
             ) {
-                items(diseaseList.value) { item ->
+                items(
+                    diseaseList.value,
+                    key = { disease -> disease.id }
+                ) { item ->
                     ListItemMain(
                         item.id,
                         item.name,
