@@ -19,6 +19,7 @@ class PatientViewModel @Inject constructor(private val patientDao: PatientsDao) 
     var name by mutableStateOf("")
     var description by mutableStateOf("")
     var age by mutableStateOf(0)
+    var contactNumber by mutableStateOf("")
     var errorTypes by mutableStateOf<ErrorTypes?>(null)
     val databaseOperationResult = oneShotFlow<ErrorTypes>()
 
@@ -31,7 +32,7 @@ class PatientViewModel @Inject constructor(private val patientDao: PatientsDao) 
                     PatientInfo(
                         id = 0,
                         name = name,
-                        contactNumber = "",
+                        contactNumber = contactNumber,
                         age = age,
                         description = description,
                         patientId = System.currentTimeMillis()

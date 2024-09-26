@@ -92,6 +92,25 @@ fun AddPatient(
                 Spacer(modifier = Modifier.height(16.dp))
 
                 OutlinedTextField(
+                    value = viewModel.contactNumber,
+                    onValueChange = { viewModel.contactNumber = it },
+                    label = { Text("Contact Number") },
+                    modifier = Modifier.fillMaxWidth(),
+                    keyboardOptions = KeyboardOptions.Default.copy(
+                        imeAction = ImeAction.Next, keyboardType = KeyboardType.Phone
+                    ),
+                    shape = RoundedCornerShape(12.dp),
+                    textStyle = TextStyle(
+                        fontSize = 16.sp,
+                        fontFamily = FontFamily.SansSerif,
+                        fontWeight = FontWeight.Normal
+                    ),
+                    isError = viewModel.errorTypes == ErrorTypes.CONTACT_EMPTY
+                )
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                OutlinedTextField(
                     value = viewModel.age.toString(),
                     onValueChange = { viewModel.age = it.toIntOrNull() ?: 0 },
                     label = { Text("Patient Age") },
@@ -140,6 +159,7 @@ fun AddPatient(
                                 viewModel.name.isEmpty() -> ErrorTypes.NAME_EMPTY
                                 viewModel.age == 0 -> ErrorTypes.AGE_EMPTY
                                 viewModel.description.isEmpty() -> ErrorTypes.DESCRIPTION_EMPTY
+                                viewModel.contactNumber.isEmpty() -> ErrorTypes.CONTACT_EMPTY
                                 else -> ErrorTypes.NO_ERROR
                             }
                         } else {

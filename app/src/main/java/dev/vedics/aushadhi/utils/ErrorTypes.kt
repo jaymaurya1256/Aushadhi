@@ -9,5 +9,6 @@ enum class ErrorTypes {
 
     NAME_EMPTY,
     DESCRIPTION_EMPTY,
-    AGE_EMPTY
+    AGE_EMPTY,
+    CONTACT_EMPTY
 }
