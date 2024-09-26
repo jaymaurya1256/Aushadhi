@@ -1,6 +1,7 @@
 package dev.vedics.aushadhi.ui.components
 
 import androidx.compose.runtime.Composable
+import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -10,6 +11,7 @@ import dev.vedics.aushadhi.ui.screens.aushadhi.AushadhiDetail
 import dev.vedics.aushadhi.ui.screens.aushadhi.AushadhiScreen
 import dev.vedics.aushadhi.ui.screens.disease.DiseaseDetail
 import dev.vedics.aushadhi.ui.screens.disease.DiseaseScreen
+import dev.vedics.aushadhi.ui.screens.patient.AddPatient
 import dev.vedics.aushadhi.ui.screens.patient.PatientScreen
 import kotlinx.serialization.Serializable
 
@@ -35,6 +37,10 @@ fun AppNavigation() {
         composable<AddRecordScreen>{
             val args = it.toRoute<AddRecordScreen>()
             AddRecord(navController = navController, recordType = args.recordType)
+        }
+
+        composable<AddPatientScreen>{
+            AddPatient(navController = navController)
         }
 
         composable<AushadhiDetailScreen>{
@@ -75,3 +81,6 @@ object PatientDetailScreen
 data class AddRecordScreen(
     val recordType: String
 )
+
+@Serializable
+object AddPatientScreen

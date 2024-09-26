@@ -9,5 +9,8 @@ data class PatientInfo(
     @PrimaryKey(autoGenerate = true)
     val id: Int,
     val name: String,
+    val contactNumber: String,
+    val age: Int,
+    val description: String,
     val patientId: Long
 )

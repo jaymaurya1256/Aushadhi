@@ -8,5 +8,6 @@ enum class ErrorTypes {
     DATABASE_ERROR,
 
     NAME_EMPTY,
-    DESCRIPTION_EMPTY
+    DESCRIPTION_EMPTY,
+    AGE_EMPTY
 }
