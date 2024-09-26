@@ -44,11 +44,6 @@ fun DiseaseScreen(
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .background(
-                    brush = Brush.linearGradient(
-                        colors = listOf(Color(0xFFBBDEFB), Color(0xFF64B5F6), Color(0xFF1976D2))
-                    )
-                )
         ) {
             LazyColumn(
                 modifier = Modifier
@@ -71,7 +66,9 @@ fun DiseaseScreen(
                     )
                 }
             }
-            BottomNavigationBar(navController = navController,
+            BottomNavigationBar(
+                navController = navController,
+                screenType = ScreenType.DISEASE,
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
                     .onGloballyPositioned { bottomNavHeight = it.size.height })
@@ -84,7 +81,9 @@ fun DiseaseScreen(
                     .padding(vertical = bottomNavHeight.toDp() + 8.dp)
                     .padding(16.dp)
             ) {
-                navController.navigate(AddRecordScreen(RECORD_DISEASE))
+                navController.navigate(AddRecordScreen(RECORD_DISEASE)) {
+                    launchSingleTop = true
+                }
             }
         }
     }

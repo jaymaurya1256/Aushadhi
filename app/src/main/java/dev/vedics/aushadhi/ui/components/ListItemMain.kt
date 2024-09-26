@@ -6,6 +6,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CardElevation
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -38,8 +40,12 @@ fun ListItemMain(id: Int, name: String, description: String, navController: NavC
                             launchSingleTop = true
                         }
                     }
+                    else -> {
+                        // Do nothing
+                    }
                 }
             },
+        elevation = CardDefaults.cardElevation(4.dp)
     ) {
         Column(
             modifier = Modifier

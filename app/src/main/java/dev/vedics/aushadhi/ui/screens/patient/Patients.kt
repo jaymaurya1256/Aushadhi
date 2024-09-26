@@ -36,6 +36,7 @@ import dev.vedics.aushadhi.ui.components.BottomNavigationBar
 import dev.vedics.aushadhi.ui.components.ListItemMainPatient
 import dev.vedics.aushadhi.utils.ButtonType
 import dev.vedics.aushadhi.utils.RECORD_PATIENT
+import dev.vedics.aushadhi.utils.ScreenType
 
 @Composable
 fun PatientScreen(navController: NavController, viewModel: PatientViewModel = hiltViewModel()) {
@@ -47,12 +48,6 @@ fun PatientScreen(navController: NavController, viewModel: PatientViewModel = hi
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .background(
-                    brush = Brush.linearGradient(
-                        colors = listOf(Color(0xFFBBDEFB), Color(0xFF64B5F6), Color(0xFF1976D2))
-                    )
-                )
-
         ) {
             LazyColumn(
                 modifier = Modifier
@@ -75,6 +70,7 @@ fun PatientScreen(navController: NavController, viewModel: PatientViewModel = hi
             }
             BottomNavigationBar(
                 navController = navController,
+                screenType = ScreenType.PATIENT,
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
                     .onGloballyPositioned { bottomNavHeight = it.size.height }
