@@ -11,6 +11,13 @@ data class PatientInfo(
     val name: String,
     val contactNumber: String,
     val age: Int,
+    val gender: Gender,
     val description: String,
     val patientId: Long
 )
+
+enum class Gender {
+    Male,
+    Female,
+    Other
+}

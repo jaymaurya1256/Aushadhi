@@ -52,6 +52,7 @@ fun AddButton(
                 ButtonType.ADD_DISEASE -> R.drawable.disease
                 ButtonType.ADD_PATIENT -> R.drawable.patient
                 ButtonType.ADD_AUSHADHI -> R.drawable.aushadhi
+                ButtonType.ADD_VISIT -> R.drawable.visits
                 else -> R.drawable.aushadhi
             }
         )

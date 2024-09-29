@@ -15,7 +15,7 @@ import dev.vedics.aushadhi.database.entity.patient.Visit
 
 @Database(
     entities = [Aushadhi::class, Disease::class, PatientInfo::class, Visit::class],
-    version = 2,
+    version = 1,
     exportSchema = true
 )
 abstract class MainDatabase : RoomDatabase() {

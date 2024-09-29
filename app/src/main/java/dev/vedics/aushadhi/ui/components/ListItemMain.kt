@@ -79,12 +79,16 @@ fun ListItemMain(id: Int, name: String, description: String, navController: NavC
 }
 
 @Composable
-fun ListItemMainPatient(patientName: String, patientId: Long) {
+fun ListItemMainPatient(navController: NavController, patientName: String, patientId: Long) {
     Card(
         modifier = Modifier
             .padding(top = 6.dp, start = 8.dp, end = 8.dp)
             .fillMaxWidth()
-            .clickable {},
+            .clickable {
+                navController.navigate(PatientDetailScreen(patientId)) {
+                    launchSingleTop = true
+                }
+            },
         elevation = CardDefaults.cardElevation(4.dp)
         ) {
         Column(

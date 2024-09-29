@@ -53,6 +53,7 @@ fun PatientScreen(navController: NavController, viewModel: PatientViewModel = hi
                 )
                 { item ->
                     ListItemMainPatient(
+                        navController,
                         item.name,
                         item.patientId
                     )

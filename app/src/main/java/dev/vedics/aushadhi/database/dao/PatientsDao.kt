@@ -33,7 +33,7 @@ interface PatientsDao {
     fun getAll(): Flow<List<PatientInfo>>
 
     @Query("SELECT * FROM $PATIENT_INFO_TABLE_NAME WHERE $PATIENT_INFO_PATIENT_ID = :patientId")
-    suspend fun getPatientInfo(patientId: Long): Patient
+    fun getPatientInfo(patientId: Long): Flow<PatientInfo>
 
     @Query("SELECT * FROM $VISITS_TABLE_NAME WHERE $VISIT_PATIENT_ID= :patientId")
     fun getPatientVisit(patientId: Long): Flow<List<Visit>>

@@ -8,8 +8,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -44,7 +46,7 @@ import dev.vedics.aushadhi.utils.ErrorTypes
 @Composable
 fun AddPatient(
     navController: NavController,
-    viewModel: PatientViewModel = hiltViewModel()
+    viewModel: AddPatientViewModel = hiltViewModel()
 ) {
     val snackBar = remember { SnackbarHostState() }
 
@@ -73,6 +75,7 @@ fun AddPatient(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(padding)
+                    .verticalScroll(rememberScrollState())
                     .background(Color(0xFFF0F0F0))
                     .padding(16.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,

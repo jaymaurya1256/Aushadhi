@@ -1,7 +1,6 @@
 package dev.vedics.aushadhi.ui.components
 
 import androidx.compose.runtime.Composable
-import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -12,7 +11,9 @@ import dev.vedics.aushadhi.ui.screens.aushadhi.AushadhiScreen
 import dev.vedics.aushadhi.ui.screens.disease.DiseaseDetail
 import dev.vedics.aushadhi.ui.screens.disease.DiseaseScreen
 import dev.vedics.aushadhi.ui.screens.patient.AddPatient
+import dev.vedics.aushadhi.ui.screens.patient.AddVisitScreen
 import dev.vedics.aushadhi.ui.screens.patient.PatientScreen
+import dev.vedics.aushadhi.ui.screens.patient.PatientDetail
 import kotlinx.serialization.Serializable
 
 @Composable
@@ -28,6 +29,11 @@ fun AppNavigation() {
 
         composable<PatientScreen> {
             PatientScreen(navController)
+        }
+
+        composable<PatientDetailScreen> {
+            val args = it.toRoute<PatientDetailScreen>()
+            PatientDetail(navController, patientId = args.id)
         }
 
         composable<DiseaseScreen> {
@@ -52,6 +58,11 @@ fun AppNavigation() {
             val args = it.toRoute<DiseaseDetailScreen>()
             DiseaseDetail(navController = navController, id = args.id)
         }
+
+        composable<AddVisitScreen>{
+            val args = it.toRoute<AddVisitScreen>()
+            AddVisitScreen(navController = navController, patientId = args.patientId)
+        }
     }
 }
 
@@ -75,7 +86,9 @@ data class DiseaseDetailScreen(
 object PatientScreen
 
 @Serializable
-object PatientDetailScreen
+data class PatientDetailScreen(
+    val id: Long
+)
 
 @Serializable
 data class AddRecordScreen(
@@ -84,3 +97,8 @@ data class AddRecordScreen(
 
 @Serializable
 object AddPatientScreen
+
+@Serializable
+data class AddVisitScreen (
+    val patientId: Long
+)
