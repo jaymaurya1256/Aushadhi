@@ -24,7 +24,11 @@ import dev.vedics.aushadhi.ui.theme.Orange
 import dev.vedics.aushadhi.utils.ScreenType
 
 @Composable
-fun BottomNavigationBar(navController: NavController, screenType: ScreenType, modifier: Modifier = Modifier) {
+fun BottomNavigationBar(
+    navController: NavController,
+    screenType: ScreenType,
+    modifier: Modifier = Modifier
+) {
     Row(
         modifier = modifier
             .pointerInput(Unit) {
@@ -36,9 +40,11 @@ fun BottomNavigationBar(navController: NavController, screenType: ScreenType, mo
             }
             .background(Color.Transparent)
             .fillMaxWidth()
-            .background(Color.White, RoundedCornerShape(
-                topStart = 16.dp, topEnd = 16.dp
-            ))
+            .background(
+                Color.White, RoundedCornerShape(
+                    topStart = 16.dp, topEnd = 16.dp
+                )
+            )
             .navigationBarsPadding()
             .padding(top = 16.dp, start = 4.dp, end = 4.dp, bottom = 4.dp),
         horizontalArrangement = Arrangement.SpaceAround
@@ -49,10 +55,16 @@ fun BottomNavigationBar(navController: NavController, screenType: ScreenType, mo
                 .clip(CircleShape)
                 .clickable {
                     navController.navigate(AushadhiScreen) {
+                        popUpTo(navController.graph.startDestinationId) {
+                            inclusive = true
+                        }
                         launchSingleTop = true
                     }
                 }
-                .background(if (screenType == ScreenType.AUSHADHI) Orange else Color.Transparent, CircleShape)
+                .background(
+                    if (screenType == ScreenType.AUSHADHI) Orange else Color.Transparent,
+                    CircleShape
+                )
                 .padding(6.dp),
             painter = painterResource(id = R.drawable.aushadhi),
             contentDescription = "Aushadhi",
@@ -64,10 +76,16 @@ fun BottomNavigationBar(navController: NavController, screenType: ScreenType, mo
                 .clip(CircleShape)
                 .clickable {
                     navController.navigate(DiseaseScreen) {
+                        popUpTo(navController.graph.startDestinationId) {
+                            inclusive = true
+                        }
                         launchSingleTop = true
                     }
                 }
-                .background(if (screenType == ScreenType.DISEASE) Orange else Color.Transparent, CircleShape)
+                .background(
+                    if (screenType == ScreenType.DISEASE) Orange else Color.Transparent,
+                    CircleShape
+                )
                 .padding(6.dp),
             painter = painterResource(id = R.drawable.disease),
             contentDescription = "Disease",
@@ -79,10 +97,16 @@ fun BottomNavigationBar(navController: NavController, screenType: ScreenType, mo
                 .clip(CircleShape)
                 .clickable {
                     navController.navigate(PatientScreen) {
+                        popUpTo(navController.graph.startDestinationId) {
+                            inclusive = true
+                        }
                         launchSingleTop = true
                     }
                 }
-                .background(if (screenType == ScreenType.PATIENT) Orange else Color.Transparent, CircleShape)
+                .background(
+                    if (screenType == ScreenType.PATIENT) Orange else Color.Transparent,
+                    CircleShape
+                )
                 .padding(6.dp),
             painter = painterResource(id = R.drawable.patient),
             contentDescription = "Patient",

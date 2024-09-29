@@ -15,11 +15,14 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -47,6 +50,7 @@ fun AddRecord(
     recordType: String,
     viewModel: AddRecordViewModel = hiltViewModel()
 ) {
+    val snackBar = remember { SnackbarHostState() }
 
 
     LaunchedEffect(key1 = Unit) {
@@ -57,7 +61,7 @@ fun AddRecord(
                     RECORD_DISEASE -> navController.navigate(DiseaseScreen)
                 }
             }else {
-                //TODO: figure out how to show error message here in non-activity class
+                snackBar.showSnackbar("Error saving patient record")
             }
         }
     }
@@ -72,6 +76,7 @@ fun AddRecord(
                 )
             )
         },
+        snackbarHost = { SnackbarHost(hostState = snackBar) },
         content = { padding ->
             Column(
                 modifier = Modifier

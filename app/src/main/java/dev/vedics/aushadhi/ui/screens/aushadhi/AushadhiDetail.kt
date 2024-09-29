@@ -7,7 +7,10 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardColors
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
@@ -35,11 +38,17 @@ fun AushadhiDetail(id: Int, viewModel: AushadhiViewModel = hiltViewModel()) {
             .fillMaxSize()
             .padding(vertical = 32.dp)
     ) {
-        Column {
+        Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
             Card(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(16.dp),
+                colors = CardColors(
+                    containerColor = Color.White,
+                    disabledContentColor = Color.Transparent,
+                    disabledContainerColor = Color.Transparent,
+                    contentColor = Color.Transparent,
+                ),
                 elevation = CardDefaults.cardElevation(8.dp)
             ) {
                 Column(
