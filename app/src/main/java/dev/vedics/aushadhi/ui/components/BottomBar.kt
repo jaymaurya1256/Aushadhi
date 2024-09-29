@@ -21,9 +21,10 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import dev.vedics.aushadhi.R
 import dev.vedics.aushadhi.ui.theme.Orange
+import dev.vedics.aushadhi.utils.ScreenType
 
 @Composable
-fun BottomNavigationBar(navController: NavController, modifier: Modifier = Modifier) {
+fun BottomNavigationBar(navController: NavController, screenType: ScreenType, modifier: Modifier = Modifier) {
     Row(
         modifier = modifier
             .pointerInput(Unit) {
@@ -50,10 +51,12 @@ fun BottomNavigationBar(navController: NavController, modifier: Modifier = Modif
                     navController.navigate(AushadhiScreen) {
                         launchSingleTop = true
                     }
-                },
+                }
+                .background(if (screenType == ScreenType.AUSHADHI) Orange else Color.Transparent, CircleShape)
+                .padding(6.dp),
             painter = painterResource(id = R.drawable.aushadhi),
             contentDescription = "Aushadhi",
-            tint = Orange
+            tint = if (screenType == ScreenType.AUSHADHI) Color.White else Orange
         )
         Icon(
             modifier = Modifier
@@ -63,10 +66,12 @@ fun BottomNavigationBar(navController: NavController, modifier: Modifier = Modif
                     navController.navigate(DiseaseScreen) {
                         launchSingleTop = true
                     }
-                },
+                }
+                .background(if (screenType == ScreenType.DISEASE) Orange else Color.Transparent, CircleShape)
+                .padding(6.dp),
             painter = painterResource(id = R.drawable.disease),
             contentDescription = "Disease",
-            tint = Orange
+            tint = if (screenType == ScreenType.DISEASE) Color.White else Orange
         )
         Icon(
             modifier = Modifier
@@ -76,10 +81,12 @@ fun BottomNavigationBar(navController: NavController, modifier: Modifier = Modif
                     navController.navigate(PatientScreen) {
                         launchSingleTop = true
                     }
-                },
+                }
+                .background(if (screenType == ScreenType.PATIENT) Orange else Color.Transparent, CircleShape)
+                .padding(6.dp),
             painter = painterResource(id = R.drawable.patient),
             contentDescription = "Patient",
-            tint = Orange
+            tint = if (screenType == ScreenType.PATIENT) Color.White else Orange
         )
     }
 }

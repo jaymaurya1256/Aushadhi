@@ -38,11 +38,6 @@ fun DiseaseDetail(navController: NavController, id: Int, viewModel: DiseaseViewM
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(
-                brush = Brush.linearGradient(
-                    colors = listOf(Color(0xFFBBDEFB), Color(0xFF64B5F6), Color(0xFF1976D2))
-                )
-            )
             .padding(vertical = 32.dp)
     ) {
         Column {
