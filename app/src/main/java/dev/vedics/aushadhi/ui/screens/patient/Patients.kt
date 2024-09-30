@@ -49,7 +49,7 @@ fun PatientScreen(navController: NavController, viewModel: PatientViewModel = hi
             ) {
                 items(
                     patientList,
-                    key = { patient -> patient.id }
+                    key = { patient -> patient.patientId }
                 )
                 { item ->
                     ListItemMainPatient(

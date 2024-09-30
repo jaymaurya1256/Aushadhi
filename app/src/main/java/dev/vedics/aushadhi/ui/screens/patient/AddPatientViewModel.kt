@@ -29,7 +29,6 @@ class AddPatientViewModel @Inject constructor(private val patientDao: PatientsDa
             try {
                 patientDao.insert(
                     PatientInfo(
-                        id = 0,
                         name = name,
                         contactNumber = contactNumber,
                         age = age,

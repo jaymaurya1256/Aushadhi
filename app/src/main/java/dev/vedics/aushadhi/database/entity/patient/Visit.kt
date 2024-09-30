@@ -5,6 +5,7 @@ import androidx.room.ForeignKey
 import androidx.room.Index
 import androidx.room.PrimaryKey
 import dev.vedics.aushadhi.utils.PATIENT_INFO_COLUMN_ID
+import dev.vedics.aushadhi.utils.PATIENT_INFO_PATIENT_ID
 import dev.vedics.aushadhi.utils.VISITS_TABLE_NAME
 import dev.vedics.aushadhi.utils.VISIT_PATIENT_ID
 
@@ -12,7 +13,7 @@ import dev.vedics.aushadhi.utils.VISIT_PATIENT_ID
     tableName = VISITS_TABLE_NAME,
     foreignKeys = [ForeignKey(
         entity = PatientInfo::class,
-        parentColumns = [PATIENT_INFO_COLUMN_ID],
+        parentColumns = [PATIENT_INFO_PATIENT_ID],
         childColumns = [VISIT_PATIENT_ID],
         onDelete = ForeignKey.CASCADE
     )],
