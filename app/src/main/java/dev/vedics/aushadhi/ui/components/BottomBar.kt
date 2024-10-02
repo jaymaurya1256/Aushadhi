@@ -10,6 +10,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -112,5 +114,53 @@ fun BottomNavigationBar(
             contentDescription = "Patient",
             tint = if (screenType == ScreenType.PATIENT) Color.White else Orange
         )
+    }
+}
+
+@Composable
+fun BottomBarPrescription(modifier: Modifier = Modifier, onClickClean : () -> Unit, onClickSave : () -> Unit, onClickPrint : () -> Unit) {
+    Card(modifier = modifier, elevation = CardDefaults.cardElevation(8.dp)) {
+        Row(
+            modifier = modifier
+                .background(Color.White)
+                .fillMaxWidth()
+                .navigationBarsPadding()
+                .padding(top = 16.dp, start = 4.dp, end = 4.dp, bottom = 4.dp),
+            horizontalArrangement = Arrangement.SpaceAround,
+        ) {
+            Icon(
+                modifier = modifier
+                    .size(48.dp)
+                    .clip(CircleShape)
+                    .clickable { onClickClean() }
+                    .background(Orange, CircleShape)
+                    .padding(8.dp),
+                painter = painterResource(id = R.drawable.clear),
+                contentDescription = "Prescription",
+                tint = Color.White
+            )
+            Icon(
+                modifier = modifier
+                    .size(48.dp)
+                    .clip(CircleShape)
+                    .clickable { onClickSave() }
+                    .background(Orange, CircleShape)
+                    .padding(8.dp),
+                painter = painterResource(id = R.drawable.save),
+                contentDescription = "Visits",
+                tint = Color.White
+            )
+            Icon(
+                modifier = modifier
+                    .size(48.dp)
+                    .clip(CircleShape)
+                    .clickable { onClickPrint() }
+                    .background(Orange, CircleShape)
+                    .padding(8.dp),
+                painter = painterResource(id = R.drawable.printer),
+                contentDescription = "Aushadhi",
+                tint = Color.White
+            )
+        }
     }
 }

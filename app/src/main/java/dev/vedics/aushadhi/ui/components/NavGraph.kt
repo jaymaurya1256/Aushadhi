@@ -12,8 +12,9 @@ import dev.vedics.aushadhi.ui.screens.disease.DiseaseDetail
 import dev.vedics.aushadhi.ui.screens.disease.DiseaseScreen
 import dev.vedics.aushadhi.ui.screens.patient.AddPatient
 import dev.vedics.aushadhi.ui.screens.patient.AddVisitScreen
-import dev.vedics.aushadhi.ui.screens.patient.PatientScreen
 import dev.vedics.aushadhi.ui.screens.patient.PatientDetail
+import dev.vedics.aushadhi.ui.screens.patient.PatientScreen
+import dev.vedics.aushadhi.ui.screens.patient.prescription.AddPrescriptionScreen
 import kotlinx.serialization.Serializable
 
 @Composable
@@ -63,6 +64,10 @@ fun AppNavigation() {
             val args = it.toRoute<AddVisitScreen>()
             AddVisitScreen(navController = navController, patientId = args.patientId)
         }
+
+        composable<AddPrescriptionScreen> {
+            AddPrescriptionScreen()
+        }
     }
 }
 
@@ -102,3 +107,6 @@ object AddPatientScreen
 data class AddVisitScreen (
     val patientId: Long
 )
+
+@Serializable
+object AddPrescriptionScreen

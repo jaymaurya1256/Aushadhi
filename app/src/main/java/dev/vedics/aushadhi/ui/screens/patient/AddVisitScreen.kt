@@ -3,6 +3,7 @@ package dev.vedics.aushadhi.ui.screens.patient
 import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.captionBarPadding
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -14,7 +15,6 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -31,8 +31,10 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import dev.vedics.aushadhi.database.entity.patient.Visit
+import dev.vedics.aushadhi.ui.components.AddButton
+import dev.vedics.aushadhi.ui.components.AddPrescriptionScreen
 import dev.vedics.aushadhi.ui.theme.Orange
-import dev.vedics.aushadhi.utils.ErrorTypes
+import dev.vedics.aushadhi.utils.ButtonType
 
 
 private const val TAG = "AddVisitScreen"
@@ -110,6 +112,16 @@ fun AddVisitScreen(
                 visualTransformation = VisualTransformation.None
             )
 
+            AddButton(
+                onClick = {
+                    navController.navigate(AddPrescriptionScreen)
+                },
+                modifier = Modifier.fillMaxWidth(),
+                text = "Write a prescription",
+                category = ButtonType.ADD_PRESCRIPTION
+            )
+
+            Spacer(modifier = Modifier.weight(1f))
             Button(
                 onClick = {
                     val newVisit = Visit(

@@ -53,6 +53,8 @@ fun AddButton(
                 ButtonType.ADD_PATIENT -> R.drawable.patient
                 ButtonType.ADD_AUSHADHI -> R.drawable.aushadhi
                 ButtonType.ADD_VISIT -> R.drawable.visits
+                ButtonType.ADD_PRESCRIPTION -> R.drawable.prescription
+                ButtonType.CLEAR -> R.drawable.clear
                 else -> R.drawable.aushadhi
             }
         )
