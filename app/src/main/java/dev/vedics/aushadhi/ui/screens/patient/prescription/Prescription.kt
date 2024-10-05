@@ -46,6 +46,8 @@ fun AddPrescriptionScreen(viewModel: PrescriptionViewModel = hiltViewModel()) {
                         onDragEnd = {
                             if (isDrawing) {
                                 viewModel.paths.add(viewModel.displayPaths.last())
+                                viewModel.displayPaths.clear()
+                                viewModel.displayPaths.addAll(viewModel.paths)
                                 currentPath = Path()
                                 isDrawing = false
                             }
