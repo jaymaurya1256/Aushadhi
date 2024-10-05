@@ -1,5 +1,7 @@
 package dev.vedics.aushadhi.ui.screens.patient.prescription
 
+import android.graphics.Bitmap
+import android.util.Log
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.layout.Column
@@ -19,7 +21,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import dev.vedics.aushadhi.ui.components.BottomBarPrescription
 
-
+private const val TAG = "Prescription"
 @Composable
 fun AddPrescriptionScreen(viewModel: PrescriptionViewModel = hiltViewModel()) {
     var currentPath by remember { mutableStateOf(Path()) }
@@ -39,10 +41,11 @@ fun AddPrescriptionScreen(viewModel: PrescriptionViewModel = hiltViewModel()) {
                         onDrag = { change, _ ->
                             change.consume()
                             currentPath.lineTo(change.position.x, change.position.y)
+                            viewModel.displayPaths.add(currentPath)
                         },
                         onDragEnd = {
                             if (isDrawing) {
-                                viewModel.paths.add(currentPath)
+                                viewModel.paths.add(viewModel.displayPaths.last())
                                 currentPath = Path()
                                 isDrawing = false
                             }
@@ -50,13 +53,22 @@ fun AddPrescriptionScreen(viewModel: PrescriptionViewModel = hiltViewModel()) {
                     )
                 }
         ) {
-            drawPaths(viewModel.paths)
-            drawPath(currentPath, Color.Black)
+            drawPaths(viewModel.displayPaths)
         }
 
         BottomBarPrescription(
             onClickClean = {
                 viewModel.paths.clear()
+                viewModel.displayPaths.clear()
+            },
+            onClickUndo = {
+                try {
+                    viewModel.paths.removeLast()
+                    viewModel.displayPaths.clear()
+                    viewModel.displayPaths.addAll(viewModel.paths)
+                }catch (e: Exception) {
+                    Log.e(TAG, "AddPrescriptionScreen: ", e)
+                }
             },
             onClickSave = {
                 viewModel.savePrescription()

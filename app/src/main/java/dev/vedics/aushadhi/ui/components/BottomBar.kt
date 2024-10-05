@@ -118,7 +118,7 @@ fun BottomNavigationBar(
 }
 
 @Composable
-fun BottomBarPrescription(modifier: Modifier = Modifier, onClickClean : () -> Unit, onClickSave : () -> Unit, onClickPrint : () -> Unit) {
+fun BottomBarPrescription(modifier: Modifier = Modifier, onClickClean : () -> Unit, onClickUndo : () -> Unit, onClickSave : () -> Unit, onClickPrint : () -> Unit) {
     Card(modifier = modifier, elevation = CardDefaults.cardElevation(8.dp)) {
         Row(
             modifier = modifier
@@ -137,6 +137,17 @@ fun BottomBarPrescription(modifier: Modifier = Modifier, onClickClean : () -> Un
                     .padding(8.dp),
                 painter = painterResource(id = R.drawable.clear),
                 contentDescription = "Prescription",
+                tint = Color.White
+            )
+            Icon(
+                modifier = modifier
+                    .size(48.dp)
+                    .clip(CircleShape)
+                    .clickable { onClickUndo() }
+                    .background(Orange, CircleShape)
+                    .padding(8.dp),
+                painter = painterResource(id = R.drawable.undo),
+                contentDescription = "Visits",
                 tint = Color.White
             )
             Icon(

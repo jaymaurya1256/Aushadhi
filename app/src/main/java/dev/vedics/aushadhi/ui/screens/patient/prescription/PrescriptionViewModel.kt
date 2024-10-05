@@ -9,6 +9,7 @@ import javax.inject.Inject
 @HiltViewModel
 class PrescriptionViewModel @Inject constructor() : ViewModel() {
     val paths = mutableStateListOf<Path>()
+    val displayPaths = mutableStateListOf<Path>()
 
     fun savePrescription() {
         // TODO: Save prescription to database
