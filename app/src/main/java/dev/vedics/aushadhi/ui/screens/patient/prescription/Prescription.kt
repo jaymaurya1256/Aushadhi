@@ -1,6 +1,5 @@
 package dev.vedics.aushadhi.ui.screens.patient.prescription
 
-import android.graphics.Bitmap
 import android.util.Log
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.gestures.detectDragGestures
@@ -12,18 +11,20 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
-import androidx.compose.ui.graphics.drawscope.DrawScope
-import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import dev.vedics.aushadhi.ui.components.BottomBarPrescription
+import dev.vedics.aushadhi.utils.dpToPx
+import dev.vedics.aushadhi.utils.drawPaths
 
 private const val TAG = "Prescription"
 @Composable
-fun AddPrescriptionScreen(viewModel: PrescriptionViewModel = hiltViewModel()) {
+fun AddPrescriptionScreen(patientId: Long, visitId: Int, viewModel: PrescriptionViewModel = hiltViewModel()) {
+    val context = LocalContext.current
+    val configuration = LocalConfiguration.current
     var currentPath by remember { mutableStateOf(Path()) }
     var isDrawing by remember { mutableStateOf(false) }
 
@@ -59,6 +60,8 @@ fun AddPrescriptionScreen(viewModel: PrescriptionViewModel = hiltViewModel()) {
         }
 
         BottomBarPrescription(
+            patientId = patientId,
+            visitId = visitId,
             onClickClean = {
                 viewModel.paths.clear()
                 viewModel.displayPaths.clear()
@@ -73,7 +76,8 @@ fun AddPrescriptionScreen(viewModel: PrescriptionViewModel = hiltViewModel()) {
                 }
             },
             onClickSave = {
-                viewModel.savePrescription()
+                Log.d(TAG, "AddPrescriptionScreen: width ${configuration.screenWidthDp} ${configuration.screenHeightDp}")
+                viewModel.savePrescription(context, "prescription$patientId$visitId", dpToPx(context, configuration.screenWidthDp.toFloat()), dpToPx(context, configuration.screenHeightDp.toFloat()))
             },
             onClickPrint = {
                 viewModel.printPrescription()
@@ -82,14 +86,4 @@ fun AddPrescriptionScreen(viewModel: PrescriptionViewModel = hiltViewModel()) {
     }
 }
 
-fun DrawScope.drawPaths(paths: List<Path>) {
-    paths.forEach { path ->
-        drawPath(path, Color.Black, style = Stroke(4f))
-    }
-}
 
-@Preview(showBackground = true)
-@Composable
-fun PreviewHandwrittenNotesScreen() {
-    AddPrescriptionScreen()
-}

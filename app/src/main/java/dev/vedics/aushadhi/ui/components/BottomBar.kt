@@ -22,6 +22,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import dev.vedics.aushadhi.R
+import dev.vedics.aushadhi.database.entity.patient.PatientInfo
+import dev.vedics.aushadhi.database.entity.patient.Visit
 import dev.vedics.aushadhi.ui.theme.Orange
 import dev.vedics.aushadhi.utils.ScreenType
 
@@ -118,7 +120,7 @@ fun BottomNavigationBar(
 }
 
 @Composable
-fun BottomBarPrescription(modifier: Modifier = Modifier, onClickClean : () -> Unit, onClickUndo : () -> Unit, onClickSave : () -> Unit, onClickPrint : () -> Unit) {
+fun BottomBarPrescription(patientId: Long, visitId: Int, modifier: Modifier = Modifier, onClickClean : () -> Unit, onClickUndo : () -> Unit, onClickSave : () -> Unit, onClickPrint : () -> Unit) {
     Card(modifier = modifier, elevation = CardDefaults.cardElevation(8.dp)) {
         Row(
             modifier = modifier
