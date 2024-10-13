@@ -1,11 +1,13 @@
 package dev.vedics.aushadhi.ui.screens.patient.prescription
 
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -16,17 +18,35 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import dev.vedics.aushadhi.ui.components.BottomBarPrescription
+import dev.vedics.aushadhi.utils.ErrorTypes
 import dev.vedics.aushadhi.utils.dpToPx
 import dev.vedics.aushadhi.utils.drawPaths
 
 private const val TAG = "Prescription"
+
 @Composable
-fun AddPrescriptionScreen(patientId: Long, visitId: Int, viewModel: PrescriptionViewModel = hiltViewModel()) {
+fun AddPrescriptionScreen(
+    navController: NavController,
+    patientId: Long,
+    viewModel: PrescriptionViewModel = hiltViewModel()
+) {
     val context = LocalContext.current
     val configuration = LocalConfiguration.current
     var currentPath by remember { mutableStateOf(Path()) }
     var isDrawing by remember { mutableStateOf(false) }
+
+    LaunchedEffect(Unit) {
+        viewModel.prescriptionSaveOperationResult.collect { it ->
+            if (it == ErrorTypes.NO_ERROR) {
+                Toast.makeText(context, "Prescription saved", Toast.LENGTH_SHORT).show()
+                navController.popBackStack()
+            } else {
+                Toast.makeText(context, "Something went wrong...! The prescription is not saved", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
 
     Column(modifier = Modifier.fillMaxSize()) {
         Canvas(
@@ -60,8 +80,6 @@ fun AddPrescriptionScreen(patientId: Long, visitId: Int, viewModel: Prescription
         }
 
         BottomBarPrescription(
-            patientId = patientId,
-            visitId = visitId,
             onClickClean = {
                 viewModel.paths.clear()
                 viewModel.displayPaths.clear()
@@ -71,13 +89,17 @@ fun AddPrescriptionScreen(patientId: Long, visitId: Int, viewModel: Prescription
                     viewModel.paths.removeLast()
                     viewModel.displayPaths.clear()
                     viewModel.displayPaths.addAll(viewModel.paths)
-                }catch (e: Exception) {
+                } catch (e: Exception) {
                     Log.e(TAG, "AddPrescriptionScreen: ", e)
                 }
             },
             onClickSave = {
-                Log.d(TAG, "AddPrescriptionScreen: width ${configuration.screenWidthDp} ${configuration.screenHeightDp}")
-                viewModel.savePrescription(context, "prescription$patientId$visitId", dpToPx(context, configuration.screenWidthDp.toFloat()), dpToPx(context, configuration.screenHeightDp.toFloat()))
+                viewModel.savePrescription(
+                    context,
+                    "prescription$patientId",
+                    dpToPx(context, configuration.screenWidthDp.toFloat()),
+                    dpToPx(context, configuration.screenHeightDp.toFloat())
+                )
             },
             onClickPrint = {
                 viewModel.printPrescription()

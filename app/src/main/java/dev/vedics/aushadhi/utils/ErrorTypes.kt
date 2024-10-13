@@ -6,6 +6,7 @@ enum class ErrorTypes {
     NO_ERROR,
 
     DATABASE_ERROR,
+    FILE_ERROR,
 
     NAME_EMPTY,
     DESCRIPTION_EMPTY,

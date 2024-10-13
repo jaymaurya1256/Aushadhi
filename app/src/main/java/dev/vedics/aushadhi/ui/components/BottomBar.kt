@@ -120,7 +120,7 @@ fun BottomNavigationBar(
 }
 
 @Composable
-fun BottomBarPrescription(patientId: Long, visitId: Int, modifier: Modifier = Modifier, onClickClean : () -> Unit, onClickUndo : () -> Unit, onClickSave : () -> Unit, onClickPrint : () -> Unit) {
+fun BottomBarPrescription(modifier: Modifier = Modifier, onClickClean : () -> Unit, onClickUndo : () -> Unit, onClickSave : () -> Unit, onClickPrint : () -> Unit) {
     Card(modifier = modifier, elevation = CardDefaults.cardElevation(8.dp)) {
         Row(
             modifier = modifier
