@@ -67,7 +67,7 @@ fun AppNavigation() {
 
         composable<AddPrescriptionScreen> {
             val args = it.toRoute<AddPrescriptionScreen>()
-            AddPrescriptionScreen(args.patientId, args.visitId)
+            AddPrescriptionScreen(navController = navController, args.patientId)
         }
     }
 }
@@ -111,6 +111,5 @@ data class AddVisitScreen (
 
 @Serializable
 data class AddPrescriptionScreen(
-    val visitId: Int,
     val patientId: Long
 )

@@ -114,8 +114,7 @@ fun AddVisitScreen(
 
             AddButton(
                 onClick = {
-                    navController.navigate(AddPrescriptionScreen(patientId = patientId, visitId = 0))
-                    // TODO: figure out how to pass valid visitId in above line
+                    navController.navigate(AddPrescriptionScreen(patientId = patientId))
                 },
                 modifier = Modifier.fillMaxWidth(),
                 text = "Write a prescription",

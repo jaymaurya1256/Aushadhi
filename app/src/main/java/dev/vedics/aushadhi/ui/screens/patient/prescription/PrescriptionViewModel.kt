@@ -8,6 +8,8 @@ import androidx.compose.ui.graphics.asAndroidPath
 import android.graphics.Canvas as AndroidCanvas
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dev.vedics.aushadhi.utils.ErrorTypes
+import dev.vedics.aushadhi.utils.oneShotFlow
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -17,11 +19,13 @@ import javax.inject.Inject
 class PrescriptionViewModel @Inject constructor() : ViewModel() {
     val paths = mutableStateListOf<Path>()
     val displayPaths = mutableStateListOf<Path>()
+    val prescriptionSaveOperationResult = oneShotFlow<ErrorTypes>()
 
     fun savePrescription(context: Context, filename: String, width: Int, height: Int) {
         val bitmap = toBitmap(width, height)
         saveBitmapToFile(context, filename, bitmap)
     }
+
     fun printPrescription() {
         // TODO: Print prescription
     }
@@ -30,7 +34,7 @@ class PrescriptionViewModel @Inject constructor() : ViewModel() {
         val bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
         val androidCanvas = AndroidCanvas(bitmap)
         val paint = android.graphics.Paint().apply {
-            color = android.graphics.Color.WHITE
+            color = android.graphics.Color.BLACK
             style = android.graphics.Paint.Style.STROKE
             strokeWidth = 4f
         }
@@ -42,14 +46,22 @@ class PrescriptionViewModel @Inject constructor() : ViewModel() {
 
     private fun saveBitmapToFile(context: Context, filename: String, bitmap: Bitmap): String {
         val directory = context.filesDir
-        val file = File(directory, "$filename.png")
+        var file = File(directory, "$filename.png")
+        var counter = 1
+
+        while (file.exists()) {
+            file = File(directory, "$filename($counter).png")
+            counter++
+        }
 
         var fileOutputStream: FileOutputStream? = null
         try {
             fileOutputStream = FileOutputStream(file)
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, fileOutputStream) // Save as PNG
             fileOutputStream.flush()
+            prescriptionSaveOperationResult.tryEmit(ErrorTypes.NO_ERROR)
         } catch (e: IOException) {
+            prescriptionSaveOperationResult.tryEmit(ErrorTypes.FILE_ERROR)
             e.printStackTrace()
         } finally {
             fileOutputStream?.close()
