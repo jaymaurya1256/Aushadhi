@@ -1,4 +1,4 @@
-package dev.vedics.aushadhi.ui.screens.patient
+package dev.vedics.aushadhi.ui.screens.add
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf

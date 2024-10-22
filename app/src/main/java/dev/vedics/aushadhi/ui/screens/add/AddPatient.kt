@@ -1,4 +1,4 @@
-package dev.vedics.aushadhi.ui.screens.patient
+package dev.vedics.aushadhi.ui.screens.add
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement

@@ -19,6 +19,7 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import dev.vedics.aushadhi.ui.components.AddVisitScreen
 import dev.vedics.aushadhi.ui.components.BottomBarPrescription
 import dev.vedics.aushadhi.utils.ErrorTypes
 import dev.vedics.aushadhi.utils.dpToPx
@@ -41,9 +42,25 @@ fun AddPrescriptionScreen(
         viewModel.prescriptionSaveOperationResult.collect { it ->
             if (it == ErrorTypes.NO_ERROR) {
                 Toast.makeText(context, "Prescription saved", Toast.LENGTH_SHORT).show()
-                navController.popBackStack()
+                navController.navigate(
+                    AddVisitScreen(
+                        patientId = patientId,
+                        prescriptionFilePaths = viewModel.savedPrescriptionImagePaths
+                    )
+                ) {
+                    launchSingleTop = true
+                    popUpTo(
+                        navController.previousBackStackEntry?.destination?.id ?: return@navigate
+                    ) {
+                        inclusive = false
+                    }
+                }
             } else {
-                Toast.makeText(context, "Something went wrong...! The prescription is not saved", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    context,
+                    "Something went wrong...! The prescription is not saved",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
     }

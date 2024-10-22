@@ -10,11 +10,12 @@ import dev.vedics.aushadhi.ui.screens.aushadhi.AushadhiDetail
 import dev.vedics.aushadhi.ui.screens.aushadhi.AushadhiScreen
 import dev.vedics.aushadhi.ui.screens.disease.DiseaseDetail
 import dev.vedics.aushadhi.ui.screens.disease.DiseaseScreen
-import dev.vedics.aushadhi.ui.screens.patient.AddPatient
-import dev.vedics.aushadhi.ui.screens.patient.AddVisitScreen
+import dev.vedics.aushadhi.ui.screens.add.AddPatient
+import dev.vedics.aushadhi.ui.screens.patient.visits.AddVisitScreen
 import dev.vedics.aushadhi.ui.screens.patient.PatientDetail
 import dev.vedics.aushadhi.ui.screens.patient.PatientScreen
 import dev.vedics.aushadhi.ui.screens.patient.prescription.AddPrescriptionScreen
+import dev.vedics.aushadhi.ui.screens.patient.visits.ShowVisits
 import kotlinx.serialization.Serializable
 
 @Composable
@@ -62,12 +63,17 @@ fun AppNavigation() {
 
         composable<AddVisitScreen>{
             val args = it.toRoute<AddVisitScreen>()
-            AddVisitScreen(navController = navController, patientId = args.patientId)
+            AddVisitScreen(navController = navController, patientId = args.patientId, prescriptionFilePaths = args.prescriptionFilePaths)
         }
 
         composable<AddPrescriptionScreen> {
             val args = it.toRoute<AddPrescriptionScreen>()
             AddPrescriptionScreen(navController = navController, args.patientId)
+        }
+
+        composable<ShowVisits> {
+            val args = it.toRoute<ShowVisits>()
+            ShowVisits(patientId = args.patientId, visitId = args.visitId)
         }
     }
 }
@@ -106,10 +112,17 @@ object AddPatientScreen
 
 @Serializable
 data class AddVisitScreen (
-    val patientId: Long
+    val patientId: Long,
+    val prescriptionFilePaths: List<String> = emptyList()
 )
 
 @Serializable
 data class AddPrescriptionScreen(
     val patientId: Long
+)
+
+@Serializable
+data class ShowVisits(
+    val patientId: Long,
+    val visitId: Int
 )

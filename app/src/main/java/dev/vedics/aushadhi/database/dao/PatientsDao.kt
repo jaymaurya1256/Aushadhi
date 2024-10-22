@@ -12,6 +12,7 @@ import dev.vedics.aushadhi.database.entity.patient.Visit
 import dev.vedics.aushadhi.utils.PATIENT_INFO_PATIENT_ID
 import dev.vedics.aushadhi.utils.PATIENT_INFO_TABLE_NAME
 import dev.vedics.aushadhi.utils.VISITS_TABLE_NAME
+import dev.vedics.aushadhi.utils.VISIT_ID
 import dev.vedics.aushadhi.utils.VISIT_PATIENT_ID
 import kotlinx.coroutines.flow.Flow
 
@@ -36,5 +37,8 @@ interface PatientsDao {
     fun getPatientInfo(patientId: Long): Flow<PatientInfo>
 
     @Query("SELECT * FROM $VISITS_TABLE_NAME WHERE $VISIT_PATIENT_ID= :patientId")
-    fun getPatientVisit(patientId: Long): Flow<List<Visit>>
+    fun getPatientVisits(patientId: Long): Flow<List<Visit>>
+
+    @Query("SELECT * FROM $VISITS_TABLE_NAME WHERE $VISIT_PATIENT_ID= :patientId AND $VISIT_ID= :visitId")
+    fun getPatientVisitById(patientId: Long, visitId: Int): Flow<Visit>
 }

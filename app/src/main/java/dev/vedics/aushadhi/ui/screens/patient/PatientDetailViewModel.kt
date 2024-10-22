@@ -14,5 +14,5 @@ class PatientDetailViewModel @Inject constructor(private val patientsDao: Patien
     var visits = flowOf<List<Visit>>()
 
     fun getPatientInfo(patientId: Long) = patientsDao.getPatientInfo(patientId)
-    fun getPatientVisit(patientId: Long) = patientsDao.getPatientVisit(patientId)
+    fun getPatientVisit(patientId: Long) = patientsDao.getPatientVisits(patientId)
 }

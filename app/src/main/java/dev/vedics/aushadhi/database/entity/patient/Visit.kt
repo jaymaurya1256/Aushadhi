@@ -1,5 +1,6 @@
 package dev.vedics.aushadhi.database.entity.patient
 
+import androidx.compose.ui.graphics.Path
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
@@ -24,5 +25,6 @@ data class Visit(
     val patientId: Long, // Foreign key
     val visitDate: Long,
     val prescription: String,
-    val diagnosis: String
+    val diagnosis: String,
+    val prescriptionImagePaths: String = "",
 )

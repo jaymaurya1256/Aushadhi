@@ -19,6 +19,7 @@ import javax.inject.Inject
 class PrescriptionViewModel @Inject constructor() : ViewModel() {
     val paths = mutableStateListOf<Path>()
     val displayPaths = mutableStateListOf<Path>()
+    val savedPrescriptionImagePaths = mutableStateListOf<String>()
     val prescriptionSaveOperationResult = oneShotFlow<ErrorTypes>()
 
     fun savePrescription(context: Context, filename: String, width: Int, height: Int) {
@@ -53,6 +54,7 @@ class PrescriptionViewModel @Inject constructor() : ViewModel() {
             file = File(directory, "$filename($counter).png")
             counter++
         }
+        savedPrescriptionImagePaths.add(file.absolutePath)
 
         var fileOutputStream: FileOutputStream? = null
         try {

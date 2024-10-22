@@ -12,7 +12,8 @@ const val VISIT_ID = "visitId"
 const val VISIT_PATIENT_ID = "patientId"
 const val VISIT_DATE = "visitDate"
 const val VISIT_PRESCRIPTION = "prescription"
-const val Visit_DIAGNOSIS = "diagnosis"
+const val VISIT_DIAGNOSIS = "diagnosis"
+const val VISIT_PRESCRIPTION_IMAGE_PATHS = "prescriptionImagePaths"
 
 
 //ADD RECORD CONSTANTS

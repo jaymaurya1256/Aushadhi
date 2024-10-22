@@ -1,4 +1,4 @@
-package dev.vedics.aushadhi.ui.screens.patient
+package dev.vedics.aushadhi.ui.screens.patient.visits
 
 import android.util.Log
 import androidx.compose.foundation.background
@@ -42,11 +42,13 @@ private const val TAG = "AddVisitScreen"
 fun AddVisitScreen(
     navController: NavController,
     patientId: Long,
+    prescriptionFilePaths: List<String> = emptyList(),
     viewModel: AddVisitViewModel = hiltViewModel()
 ) {
 
     LaunchedEffect(Unit) {
         viewModel.patientId = patientId
+        prescriptionFilePaths.map { viewModel.imagePath.add(it) }
     }
 
     MaterialTheme(
@@ -128,7 +130,8 @@ fun AddVisitScreen(
                         patientId = viewModel.patientId,
                         visitDate = viewModel.visitDate,
                         prescription = viewModel.prescription,
-                        diagnosis = viewModel.diagnosis
+                        diagnosis = viewModel.diagnosis,
+                        prescriptionImagePaths = viewModel.imagePath.toList().filterNotNull().toString()
                     )
                     Log.d(TAG, "AddVisitScreen: $newVisit")
                     viewModel.addVisit(newVisit)

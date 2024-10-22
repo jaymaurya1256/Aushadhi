@@ -21,6 +21,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import dev.vedics.aushadhi.database.entity.patient.Gender
 import dev.vedics.aushadhi.utils.ScreenType
 
 @Composable
@@ -65,21 +66,18 @@ fun ListItemMain(id: Int, name: String, description: String, navController: NavC
                 fontFamily = FontFamily.Serif
             )
             Text(
-                modifier = Modifier.padding(4.dp),
                 text = description,
                 style = MaterialTheme.typography.bodyMedium,
                 maxLines = 10,
-                fontWeight = FontWeight.Bold,
-                fontSize = 18.sp,
-                fontStyle = FontStyle.Italic,
-                fontFamily = FontFamily.Cursive
+                fontSize = 13.sp,
+                fontFamily = FontFamily.Serif
             )
         }
     }
 }
 
 @Composable
-fun ListItemMainPatient(navController: NavController, patientName: String, patientId: Long) {
+fun ListItemMainPatient(navController: NavController, patientName: String, patientId: Long, age: Int, gender: Gender, description: String) {
     Card(
         modifier = Modifier
             .padding(top = 6.dp, start = 8.dp, end = 8.dp)
@@ -99,21 +97,26 @@ fun ListItemMainPatient(navController: NavController, patientName: String, patie
             horizontalAlignment = Alignment.Start
         ) {
             Text(
-                text = patientName,
+                text = "$patientName($patientId)",
                 style = MaterialTheme.typography.bodyMedium,
                 fontStyle = FontStyle.Normal,
                 fontWeight = FontWeight.Bold,
                 fontFamily = FontFamily.Serif
             )
             Text(
-                modifier = Modifier.padding(4.dp),
-                text = "Patient id $patientId",
+                text = "$age year old ($gender)",
                 style = MaterialTheme.typography.bodyMedium,
                 fontWeight = FontWeight.Bold,
-                fontSize = 18.sp,
-                fontStyle = FontStyle.Italic,
-                fontFamily = FontFamily.Cursive
+                fontSize = 14.sp,
+                fontFamily = FontFamily.Serif
             )
+            Text(
+                text = description,
+                style = MaterialTheme.typography.bodyMedium,
+                fontSize = 14.sp,
+                fontFamily = FontFamily.SansSerif
+            )
+
         }
     }
 }
