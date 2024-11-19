@@ -8,11 +8,11 @@ plugins {
 }
 
 android {
-    namespace = "dev.vedics.aushadhi"
+    namespace = "dev.jay.aushadhi"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "dev.vedics.aushadhi"
+        applicationId = "dev.jay.aushadhi"
         minSdk = 24
         targetSdk = 34
         versionCode = 1
