@@ -4,6 +4,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -55,6 +56,7 @@ fun AddButton(
                 ButtonType.ADD_VISIT -> R.drawable.visits
                 ButtonType.ADD_PRESCRIPTION -> R.drawable.prescription
                 ButtonType.CLEAR -> R.drawable.clear
+                ButtonType.SEARCH -> R.drawable.search
                 else -> R.drawable.aushadhi
             }
         )
@@ -73,6 +75,47 @@ fun AddButton(
         )
     }
 }
+
+@Composable
+fun SmallButtons(
+    modifier: Modifier = Modifier,
+    text: String,
+    category: Enum<ButtonType>,
+    backgroundColor: Color = Color.LightGray,
+    contentColor: Color = Color.DarkGray,
+    size: Dp = 30.dp,
+    onClick: () -> Unit = {}
+) {
+    Box(
+        modifier = modifier
+            .border(width = 1.dp, color = Color.White, shape = RoundedCornerShape(8.dp))
+            .shadow(elevation = 4.dp, shape = RoundedCornerShape(8.dp))
+            .background(color = backgroundColor, shape = RoundedCornerShape(8.dp))
+            .clickable(onClick = onClick)
+            .padding(vertical = 12.dp, horizontal = 16.dp),
+    ) {
+        val icon: Painter = painterResource(
+            when (category) {
+                ButtonType.ADD_DISEASE -> R.drawable.disease
+                ButtonType.ADD_PATIENT -> R.drawable.patient
+                ButtonType.ADD_AUSHADHI -> R.drawable.aushadhi
+                ButtonType.ADD_VISIT -> R.drawable.visits
+                ButtonType.ADD_PRESCRIPTION -> R.drawable.prescription
+                ButtonType.CLEAR -> R.drawable.clear
+                ButtonType.SEARCH -> R.drawable.search
+                else -> R.drawable.aushadhi
+            }
+        )
+        Image(
+            painter = icon,
+            contentDescription = text,
+            modifier = Modifier.size(size),
+            colorFilter = ColorFilter.tint(contentColor)
+        )
+    }
+
+}
+
 
 @Preview
 @Composable

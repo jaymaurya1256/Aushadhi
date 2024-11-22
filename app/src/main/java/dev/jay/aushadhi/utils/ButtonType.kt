@@ -6,6 +6,7 @@ enum class ButtonType {
     ADD_DISEASE,
     ADD_VISIT,
     ADD_PRESCRIPTION,
-    CLEAR
+    CLEAR,
+    SEARCH
 }
 
