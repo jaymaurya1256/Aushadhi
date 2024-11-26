@@ -12,12 +12,14 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
@@ -34,10 +36,12 @@ import dev.jay.aushadhi.database.entity.patient.Visit
 import dev.jay.aushadhi.ui.components.AddButton
 import dev.jay.aushadhi.ui.components.AddPrescriptionScreen
 import dev.jay.aushadhi.ui.theme.Orange
+import dev.jay.aushadhi.ui.theme.White
 import dev.jay.aushadhi.utils.ButtonType
 
 
 private const val TAG = "AddVisitScreen"
+
 @Composable
 fun AddVisitScreen(
     navController: NavController,
@@ -48,99 +52,92 @@ fun AddVisitScreen(
 
     LaunchedEffect(Unit) {
         viewModel.patientId = patientId
-        prescriptionFilePaths.map { viewModel.imagePath.add(it) }
+        viewModel.addPaths(prescriptionFilePaths)
     }
 
-    MaterialTheme(
-        colorScheme = lightColorScheme(
-            primary = Orange,
-            secondary = Color.White,
-        )
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(top = 40.dp)
+            .padding(16.dp)
+            .captionBarPadding()
+            .navigationBarsPadding()
     ) {
-        Column(
+        Text(
+            text = "Add Visit",
+            fontFamily = FontFamily.SansSerif,
+            style = MaterialTheme.typography.titleLarge,
+            modifier = Modifier.padding(bottom = 16.dp)
+        )
+
+
+        OutlinedTextField(
+            value = viewModel.prescription,
+            onValueChange = { viewModel.prescription = it },
+            label = { Text("Prescription") },
             modifier = Modifier
-                .fillMaxSize()
-                .padding(top = 40.dp)
-                .padding(16.dp)
-                .captionBarPadding()
-                .navigationBarsPadding()
-                .background(MaterialTheme.colorScheme.secondary)
-        ) {
-            Text(
-                text = "Add Visit",
+                .fillMaxWidth()
+                .padding(bottom = 16.dp),
+            keyboardOptions = KeyboardOptions.Default.copy(
+                imeAction = ImeAction.Next, keyboardType = KeyboardType.Text
+            ),
+            shape = RoundedCornerShape(12.dp),
+            textStyle = TextStyle(
+                fontSize = 16.sp,
                 fontFamily = FontFamily.SansSerif,
-                style = MaterialTheme.typography.titleLarge,
-                modifier = Modifier.padding(bottom = 16.dp)
-            )
+                fontWeight = FontWeight.Normal
+            ),
+            maxLines = 6,
+            visualTransformation = VisualTransformation.None
+        )
 
+        OutlinedTextField(
+            value = viewModel.diagnosis,
+            onValueChange = { viewModel.diagnosis = it },
+            label = { Text("Diagnosis") },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 16.dp),
+            keyboardOptions = KeyboardOptions.Default.copy(
+                imeAction = ImeAction.Next, keyboardType = KeyboardType.Text
+            ),
+            shape = RoundedCornerShape(12.dp),
+            textStyle = TextStyle(
+                fontSize = 16.sp,
+                fontFamily = FontFamily.SansSerif,
+                fontWeight = FontWeight.Normal
+            ),
+            maxLines = 6,
+            visualTransformation = VisualTransformation.None
+        )
 
-            OutlinedTextField(
-                value = viewModel.prescription,
-                onValueChange = { viewModel.prescription = it },
-                label = { Text("Prescription") },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 16.dp),
-                keyboardOptions = KeyboardOptions.Default.copy(
-                    imeAction = ImeAction.Next, keyboardType = KeyboardType.Text
-                ),
-                shape = RoundedCornerShape(12.dp),
-                textStyle = TextStyle(
-                    fontSize = 16.sp,
-                    fontFamily = FontFamily.SansSerif,
-                    fontWeight = FontWeight.Normal
-                ),
-                maxLines = 6,
-                visualTransformation = VisualTransformation.None
-            )
+        AddButton(
+            onClick = {
+                navController.navigate(AddPrescriptionScreen(patientId = patientId))
+            },
+            modifier = Modifier.align(alignment = Alignment.CenterHorizontally),
+            text = "Write a prescription",
+            category = ButtonType.ADD_PRESCRIPTION
+        )
 
-            OutlinedTextField(
-                value = viewModel.diagnosis,
-                onValueChange = { viewModel.diagnosis = it },
-                label = { Text("Diagnosis") },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 16.dp),
-                keyboardOptions = KeyboardOptions.Default.copy(
-                    imeAction = ImeAction.Next, keyboardType = KeyboardType.Text
-                ),
-                shape = RoundedCornerShape(12.dp),
-                textStyle = TextStyle(
-                    fontSize = 16.sp,
-                    fontFamily = FontFamily.SansSerif,
-                    fontWeight = FontWeight.Normal
-                ),
-                maxLines = 6,
-                visualTransformation = VisualTransformation.None
-            )
-
-            AddButton(
-                onClick = {
-                    navController.navigate(AddPrescriptionScreen(patientId = patientId))
-                },
-                modifier = Modifier.fillMaxWidth(),
-                text = "Write a prescription",
-                category = ButtonType.ADD_PRESCRIPTION
-            )
-
-            Spacer(modifier = Modifier.weight(1f))
-            Button(
-                onClick = {
-                    val newVisit = Visit(
-                        patientId = viewModel.patientId,
-                        visitDate = viewModel.visitDate,
-                        prescription = viewModel.prescription,
-                        diagnosis = viewModel.diagnosis,
-                        prescriptionImagePaths = viewModel.imagePath.toList().filterNotNull().toString()
-                    )
-                    Log.d(TAG, "AddVisitScreen: $newVisit")
-                    viewModel.addVisit(newVisit)
-                    navController.popBackStack()
-                },
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Text(text = "Add Visit", fontSize = 18.sp)
-            }
+        Spacer(modifier = Modifier.weight(1f))
+        Button(
+            onClick = {
+                val newVisit = Visit(
+                    patientId = viewModel.patientId,
+                    visitDate = viewModel.visitDate,
+                    prescription = viewModel.prescription,
+                    diagnosis = viewModel.diagnosis,
+                    prescriptionImagePaths = viewModel.imagePath.toList().filterNotNull().toString()
+                )
+                Log.d(TAG, "AddVisitScreen: $newVisit")
+                viewModel.addVisit(newVisit)
+                navController.popBackStack()
+            },
+            colors = ButtonColors(Orange, Color.White, Orange, Color.White),
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text(text = "Add Visit", fontSize = 18.sp)
         }
     }
 }
