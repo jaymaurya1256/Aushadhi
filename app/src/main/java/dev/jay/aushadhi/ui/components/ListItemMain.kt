@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import dev.jay.aushadhi.database.entity.patient.Gender
+import dev.jay.aushadhi.database.entity.patient.PatientInfo
 import dev.jay.aushadhi.utils.ScreenType
 
 @Composable
@@ -77,13 +78,13 @@ fun ListItemMain(id: Int, name: String, description: String, navController: NavC
 }
 
 @Composable
-fun ListItemMainPatient(navController: NavController, patientName: String, patientId: Long, age: Int, gender: Gender, description: String) {
+fun ListItemMainPatient(navController: NavController, patientInfo: PatientInfo) {
     Card(
         modifier = Modifier
             .padding(top = 6.dp, start = 8.dp, end = 8.dp)
             .fillMaxWidth()
             .clickable {
-                navController.navigate(PatientDetailScreen(patientId)) {
+                navController.navigate(PatientDetailScreen(patientInfo.patientId)) {
                     launchSingleTop = true
                 }
             },
@@ -97,21 +98,21 @@ fun ListItemMainPatient(navController: NavController, patientName: String, patie
             horizontalAlignment = Alignment.Start
         ) {
             Text(
-                text = "$patientName($patientId)",
+                text = "${patientInfo.name}(${patientInfo.patientId})",
                 style = MaterialTheme.typography.bodyMedium,
                 fontStyle = FontStyle.Normal,
                 fontWeight = FontWeight.Bold,
                 fontFamily = FontFamily.Serif
             )
             Text(
-                text = "$age year old ($gender)",
+                text = "${patientInfo.age} year old (${patientInfo.gender})",
                 style = MaterialTheme.typography.bodyMedium,
                 fontWeight = FontWeight.Bold,
                 fontSize = 14.sp,
                 fontFamily = FontFamily.Serif
             )
             Text(
-                text = description,
+                text = patientInfo.description,
                 style = MaterialTheme.typography.bodyMedium,
                 fontSize = 14.sp,
                 fontFamily = FontFamily.SansSerif

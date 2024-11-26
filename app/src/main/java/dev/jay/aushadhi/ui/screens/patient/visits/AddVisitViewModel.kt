@@ -29,4 +29,7 @@ class AddVisitViewModel @Inject constructor(private val patientsDao: PatientsDao
             )
         }
     }
+    fun addPaths(listOfPaths: List<String>) {
+        listOfPaths.map { imagePath.add(it) }
+    }
 }
