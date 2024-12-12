@@ -1,5 +1,6 @@
 package dev.jay.aushadhi.ui.components
 
+import SearchScreen
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -29,18 +30,24 @@ fun AppNavigation() {
             AushadhiScreen(navController)
         }
 
+        composable<SearchScreen> {
+            SearchScreen(navController)
+        }
+
+        composable<DiseaseScreen> {
+            DiseaseScreen(navController)
+        }
+
         composable<PatientScreen> {
             PatientScreen(navController)
         }
+
 
         composable<PatientDetailScreen> {
             val args = it.toRoute<PatientDetailScreen>()
             PatientDetail(navController, patientId = args.id)
         }
 
-        composable<DiseaseScreen> {
-            DiseaseScreen(navController)
-        }
 
         composable<AddRecordScreen>{
             val args = it.toRoute<AddRecordScreen>()
@@ -85,6 +92,9 @@ object AushadhiScreen
 data class AushadhiDetailScreen(
     val id: Int
 )
+
+@Serializable
+object SearchScreen
 
 @Serializable
 object DiseaseScreen

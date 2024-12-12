@@ -41,4 +41,7 @@ interface PatientsDao {
 
     @Query("SELECT * FROM $VISITS_TABLE_NAME WHERE $VISIT_PATIENT_ID= :patientId AND $VISIT_ID= :visitId")
     fun getPatientVisitById(patientId: Long, visitId: Int): Flow<Visit>
+
+    @Query("SELECT * FROM $PATIENT_INFO_TABLE_NAME WHERE name LIKE '%' || :query || '%'")
+    fun searchPatients(query: String): Flow<List<PatientInfo>>
 }

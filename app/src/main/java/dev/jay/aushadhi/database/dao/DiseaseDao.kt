@@ -26,4 +26,7 @@ interface DiseaseDao {
 
     @Query("SELECT * FROM disease WHERE id = :id")
     fun getDiseaseById(id: Int): Flow<Disease>
+
+    @Query("SELECT * FROM disease WHERE name LIKE '%' || :query || '%'")
+    fun searchDiseases(query: String): Flow<List<Disease>>
 }

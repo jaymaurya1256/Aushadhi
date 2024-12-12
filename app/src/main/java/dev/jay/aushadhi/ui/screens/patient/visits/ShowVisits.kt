@@ -106,10 +106,10 @@ fun ShowVisits(patientId: Long, visitId: Int, viewModel: ShowVisitsViewModel = h
                 if (!visitDetail.value?.prescriptionImagePaths.isNullOrEmpty()) {
                     val listOfPrescriptions = visitDetail.value?.prescriptionImagePaths?.removeSurrounding("[","]")?.split(", ")?.map { it.trim() }
                     listOfPrescriptions?.let {
-                        LazyColumn {
+                        LazyColumn(modifier = Modifier.padding(top = 16.dp)) {
                             items(it) { item ->
-                                DisplayImage(filePath = item, R.drawable.prescription, size = parentWidthDp)
                                 HorizontalDivider()
+                                DisplayImage(filePath = item, R.drawable.prescription, size = parentWidthDp)
                             }
                         }
                     }

@@ -79,6 +79,27 @@ fun BottomNavigationBar(
                 .size(48.dp)
                 .clip(CircleShape)
                 .clickable {
+                    navController.navigate(SearchScreen) {
+                        popUpTo(navController.graph.startDestinationId) {
+                            inclusive = true
+                        }
+                        launchSingleTop = true
+                    }
+                }
+                .background(
+                    if (screenType == ScreenType.SEARCH) Orange else Color.Transparent,
+                    CircleShape
+                )
+                .padding(6.dp),
+            painter = painterResource(id = R.drawable.search),
+            contentDescription = "Search",
+            tint = if (screenType == ScreenType.SEARCH) Color.White else Orange
+        )
+        Icon(
+            modifier = Modifier
+                .size(48.dp)
+                .clip(CircleShape)
+                .clickable {
                     navController.navigate(DiseaseScreen) {
                         popUpTo(navController.graph.startDestinationId) {
                             inclusive = true
