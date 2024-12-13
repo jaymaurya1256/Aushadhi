@@ -38,7 +38,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import dev.jay.aushadhi.ui.components.AushadhiDetailScreen
 import dev.jay.aushadhi.ui.components.BottomNavigationBar
+import dev.jay.aushadhi.ui.components.DiseaseDetailScreen
+import dev.jay.aushadhi.ui.components.ListItemSearch
+import dev.jay.aushadhi.ui.components.PatientDetailScreen
 import dev.jay.aushadhi.ui.screens.search.SearchViewModel
 import dev.jay.aushadhi.ui.screens.search.Type
 import dev.jay.aushadhi.utils.ScreenType
@@ -73,11 +77,23 @@ fun SearchScreen(
                 verticalArrangement = Arrangement.spacedBy(8.dp),
                 modifier = Modifier.systemBarsPadding().padding(bottom = 64.dp)
             ) {
+                val itemData = data.value
                 items(data.value.size) { index ->
-                    SearchItemCard(
-                        title = data.value[index].name,
-                        description = data.value[index].description,
-                        type = data.value[index].type
+                    ListItemSearch(
+                        title = itemData[index].name,
+                        description = itemData[index].description,
+                        type = itemData[index].type,
+                        onClick = {
+                            when(itemData[index].type) {
+                                Type.AUSHADHI -> {
+                                    navController.navigate(AushadhiDetailScreen(id = itemData[index].id.toInt()))
+                                }
+                                Type.DISEASE -> {
+                                    navController.navigate(DiseaseDetailScreen(id = itemData[index].id.toInt()))
+                                }
+                                Type.PATIENT -> navController.navigate(PatientDetailScreen(id = itemData[index].id))
+                            }
+                        }
                     )
                 }
             }
@@ -114,75 +130,4 @@ fun SearchBar(
     )
 }
 
-@Composable
-fun SearchItemCard(
-    title: String,
-    description: String,
-    type: Type,
-    modifier: Modifier = Modifier
-) {
-    Card(
-        modifier = modifier
-            .fillMaxWidth()
-            .shadow(4.dp, RoundedCornerShape(12.dp)),
-        colors = CardDefaults.cardColors(
-            containerColor = Color(0xFFF6F6F6)
-        )
-    ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(8.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Column(
-                modifier = Modifier
-                    .weight(1f)
-                    .padding(16.dp)
-            ) {
-                Text(
-                    text = title,
-                    style = TextStyle(
-                        fontSize = 18.sp,
-                        color = Color.Black,
-                        fontWeight = FontWeight.Bold
-                    )
-                )
-                Spacer(modifier = Modifier.height(4.dp))
-                Text(
-                    text = description,
-                    maxLines = 5,
-                    style = TextStyle(
-                        fontSize = 14.sp,
-                        color = Color.Gray
-                    )
-                )
-            }
-
-            Spacer(modifier = Modifier.width(8.dp))
-
-            VerticalDivider(
-                color = Color.LightGray,
-                thickness = 1.dp,
-                modifier = Modifier
-                    .fillMaxHeight()
-                    .padding(vertical = 8.dp)
-            )
-
-            Spacer(modifier = Modifier.width(8.dp))
-
-            Text(
-                text = type.toString(),
-                style = TextStyle(
-                    fontSize = 16.sp,
-                    color = Color.Black,
-                    fontStyle = FontStyle.Italic
-                ),
-                modifier = Modifier
-                    .padding(end = 16.dp)
-            )
-        }
-    }
-
-}
 

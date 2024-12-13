@@ -23,7 +23,7 @@ class SearchViewModel @Inject constructor(
     fun search(query: String) {
         viewModelScope.launch {
             combine(
-                aushadhiDao.searchAushadhis(query),
+                aushadhiDao.searchAushadhies(query),
                 diseaseDao.searchDiseases(query),
                 patientsDao.searchPatients(query)
             ) { aushadhis, diseases, patients ->

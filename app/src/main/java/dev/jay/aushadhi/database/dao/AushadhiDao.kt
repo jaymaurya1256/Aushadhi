@@ -26,6 +26,6 @@ interface AushadhiDao {
     @Query("SELECT * FROM aushadhi WHERE id = :id")
     fun getAushadhiById(id: Int): Flow<Aushadhi>
 
-    @Query("SELECT * FROM aushadhi WHERE name LIKE '%' || :query || '%'")
-    fun searchAushadhis(query: String): Flow<List<Aushadhi>>
+    @Query("SELECT * FROM aushadhi WHERE name LIKE '%' || :query || '%' LIMIT 3")
+    fun searchAushadhies(query: String): Flow<List<Aushadhi>>
 }
