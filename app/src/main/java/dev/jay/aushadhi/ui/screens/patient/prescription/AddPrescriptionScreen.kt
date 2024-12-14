@@ -11,6 +11,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Path
@@ -36,7 +37,7 @@ fun AddPrescriptionScreen(
     val context = LocalContext.current
     val configuration = LocalConfiguration.current
     var currentPath by remember { mutableStateOf(Path()) }
-    var isDrawing by remember { mutableStateOf(false) }
+    var isDrawing by rememberSaveable { mutableStateOf(false) }
 
     LaunchedEffect(Unit) {
         viewModel.prescriptionSaveOperationResult.collect { it ->
@@ -74,25 +75,28 @@ fun AddPrescriptionScreen(
                     detectDragGestures(
                         onDragStart = { offset ->
                             currentPath.moveTo(offset.x, offset.y)
-                            isDrawing = true
                         },
                         onDrag = { change, _ ->
                             change.consume()
                             currentPath.lineTo(change.position.x, change.position.y)
-                            viewModel.displayPaths.add(currentPath)
+                            if (!isDrawing) {
+                                isDrawing = true
+                            }else {
+                                if (viewModel.displayPaths.isNotEmpty()) {
+                                    viewModel.displayPaths.removeLast()
+                                }
+                                viewModel.displayPaths.add(currentPath)
+                            }
                         },
                         onDragEnd = {
-                            if (isDrawing) {
-                                viewModel.paths.add(viewModel.displayPaths.last())
-                                viewModel.displayPaths.clear()
-                                viewModel.displayPaths.addAll(viewModel.paths)
-                                currentPath = Path()
-                                isDrawing = false
-                            }
+                            viewModel.paths.add(viewModel.displayPaths.last())
+                            currentPath = Path()
+                            isDrawing = false
                         }
                     )
                 }
         ) {
+            drawPaths(viewModel.paths)
             drawPaths(viewModel.displayPaths)
         }
 

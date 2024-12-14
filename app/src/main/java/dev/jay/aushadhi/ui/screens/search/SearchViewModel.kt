@@ -26,10 +26,9 @@ class SearchViewModel @Inject constructor(
                 aushadhiDao.searchAushadhies(query),
                 diseaseDao.searchDiseases(query),
                 patientsDao.searchPatients(query)
-            ) { aushadhis, diseases, patients ->
+            ) { aushadhies, diseases, patients ->
                 buildList {
-                    // Add Aushadhi results
-                    aushadhis.forEach { aushadhiItem ->
+                    aushadhies.forEach { aushadhiItem ->
                         add(
                             SearchResult(
                                 id = aushadhiItem.id.toLong(),
@@ -40,7 +39,6 @@ class SearchViewModel @Inject constructor(
                         )
                     }
 
-                    // Add Disease results
                     diseases.forEach { diseaseItem ->
                         add(
                             SearchResult(
@@ -52,7 +50,6 @@ class SearchViewModel @Inject constructor(
                         )
                     }
 
-                    // Add Patient results
                     patients.forEach { patientItem ->
                         add(
                             SearchResult(
@@ -64,9 +61,8 @@ class SearchViewModel @Inject constructor(
                         )
                     }
                 }
-            }.flowOn(Dispatchers.IO) // Ensure database operations run on a background thread
+            }.flowOn(Dispatchers.IO)
                 .catch { e ->
-                    // Handle any errors, e.g., log or show a message
                     e.printStackTrace()
                 }
                 .collect { combinedResults ->
