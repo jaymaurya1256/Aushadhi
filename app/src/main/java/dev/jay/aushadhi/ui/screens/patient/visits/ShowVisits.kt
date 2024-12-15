@@ -43,10 +43,12 @@ import dev.jay.aushadhi.ui.components.DisplayImage
 import dev.jay.aushadhi.utils.timeInMilliToDate
 
 private const val TAG = "ShowVisits"
+
 @Composable
 fun ShowVisits(patientId: Long, visitId: Int, viewModel: ShowVisitsViewModel = hiltViewModel()) {
     var parentWidthDp by remember { mutableStateOf(0.dp) }
-    val visitDetail = viewModel.getParticularVisit(patientId, visitId).collectAsState(initial = null)
+    val visitDetail =
+        viewModel.getParticularVisit(patientId, visitId).collectAsState(initial = null)
     val dateFormatted = visitDetail.value?.visitDate?.let { timeInMilliToDate(it) }
     val density = LocalDensity.current
     LaunchedEffect(Unit) {
@@ -68,7 +70,10 @@ fun ShowVisits(patientId: Long, visitId: Int, viewModel: ShowVisitsViewModel = h
     ) {
         Text(
             text = "Visit Details",
-            style = MaterialTheme.typography.headlineSmall.copy(fontSize = 24.sp, fontWeight = FontWeight.Bold),
+            style = MaterialTheme.typography.headlineSmall.copy(
+                fontSize = 24.sp,
+                fontWeight = FontWeight.Bold
+            ),
             modifier = Modifier.align(Alignment.Start)
         )
 
@@ -78,42 +83,46 @@ fun ShowVisits(patientId: Long, visitId: Int, viewModel: ShowVisitsViewModel = h
             border = BorderStroke(1.dp, Color.Black),
             modifier = Modifier.fillMaxWidth()
         ) {
-            Column(
+            LazyColumn(
                 modifier = Modifier.padding(16.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                Text(
-                    text = "Patient ID: ${visitDetail.value?.patientId}",
-                    style = MaterialTheme.typography.bodyMedium
-                )
+                item {
+                    Text(
+                        text = "Patient ID: ${visitDetail.value?.patientId}",
+                        style = MaterialTheme.typography.bodyMedium
+                    )
 
-                Text(
-                    text = "Visit Date: $dateFormatted",
-                    style = MaterialTheme.typography.bodyMedium
-                )
+                    Text(
+                        text = "Visit Date: $dateFormatted",
+                        style = MaterialTheme.typography.bodyMedium
+                    )
 
-                Text(
-                    text = "Diagnosis: ${visitDetail.value?.diagnosis}",
-                    fontWeight = FontWeight.SemiBold,
-                    style = MaterialTheme.typography.bodyMedium
-                )
+                    Text(
+                        text = "Diagnosis: ${visitDetail.value?.diagnosis}",
+                        fontWeight = FontWeight.SemiBold,
+                        style = MaterialTheme.typography.bodyMedium
+                    )
 
-                Text(
-                    text = "Prescription: ${visitDetail.value?.prescription}",
-                    style = MaterialTheme.typography.bodyMedium
-                )
+                    Text(
+                        text = "Prescription: ${visitDetail.value?.prescription}",
+                        style = MaterialTheme.typography.bodyMedium
+                    )
+                }
 
                 if (!visitDetail.value?.prescriptionImagePaths.isNullOrEmpty()) {
-                    val listOfPrescriptions = visitDetail.value?.prescriptionImagePaths?.removeSurrounding("[","]")?.split(", ")?.map { it.trim() }
+                    val listOfPrescriptions =
+                        visitDetail.value?.prescriptionImagePaths?.removeSurrounding("[", "]")
+                            ?.split(", ")?.map { it.trim() }
                     listOfPrescriptions?.let {
-                        LazyColumn(modifier = Modifier.padding(top = 16.dp)) {
-                            items(it) { item ->
-                                HorizontalDivider()
-                                DisplayImage(filePath = item, R.drawable.prescription, size = parentWidthDp)
-                            }
+                        items(it) { item ->
+                            HorizontalDivider()
+                            DisplayImage(
+                                filePath = item,
+                                R.drawable.prescription,
+                                size = parentWidthDp
+                            )
                         }
                     }
-
                 }
             }
         }

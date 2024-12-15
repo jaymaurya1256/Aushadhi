@@ -113,16 +113,18 @@ fun AddRecord(
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(200.dp),
+                    keyboardOptions = KeyboardOptions.Default.copy(
+                        imeAction = ImeAction.Default,
+                        keyboardType = KeyboardType.Text
+                    ),
                     shape = RoundedCornerShape(12.dp),
                     textStyle = TextStyle(
                         fontSize = 16.sp,
                         fontFamily = FontFamily.SansSerif,
                         fontWeight = FontWeight.Normal
                     ),
-                    keyboardOptions = KeyboardOptions.Default.copy(
-                        imeAction = ImeAction.Done, keyboardType = KeyboardType.Text
-                    ),
                     maxLines = 6,
+                    singleLine = false,
                     visualTransformation = VisualTransformation.None,
                     isError = viewModel.errorTypes == ErrorTypes.DESCRIPTION_EMPTY
                 )

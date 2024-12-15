@@ -152,7 +152,8 @@ fun AddPatient(
                         fontWeight = FontWeight.Normal
                     ),
                     keyboardOptions = KeyboardOptions.Default.copy(
-                        imeAction = ImeAction.Done, keyboardType = KeyboardType.Text
+                        imeAction = ImeAction.Default,
+                        keyboardType = KeyboardType.Text
                     ),
                     maxLines = 6,
                     visualTransformation = VisualTransformation.None,

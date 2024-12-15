@@ -79,7 +79,8 @@ fun AddVisitScreen(
                 .fillMaxWidth()
                 .padding(bottom = 16.dp),
             keyboardOptions = KeyboardOptions.Default.copy(
-                imeAction = ImeAction.Next, keyboardType = KeyboardType.Text
+                imeAction = ImeAction.Default,
+                keyboardType = KeyboardType.Text
             ),
             shape = RoundedCornerShape(12.dp),
             textStyle = TextStyle(
@@ -99,7 +100,8 @@ fun AddVisitScreen(
                 .fillMaxWidth()
                 .padding(bottom = 16.dp),
             keyboardOptions = KeyboardOptions.Default.copy(
-                imeAction = ImeAction.Next, keyboardType = KeyboardType.Text
+                imeAction = ImeAction.Default,
+                keyboardType = KeyboardType.Text
             ),
             shape = RoundedCornerShape(12.dp),
             textStyle = TextStyle(
